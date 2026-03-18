@@ -1,7 +1,13 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, type ReactNode } from "react";
 import { motion, useInView } from "framer-motion";
+import dynamic from "next/dynamic";
+
+const DotLottieReact = dynamic(
+  () => import("@lottiefiles/dotlottie-react").then((m) => m.DotLottieReact),
+  { ssr: false, loading: () => <div className="h-[300px] w-[300px]" /> },
+);
 
 /* ═══ DATA ═══ */
 const PROJECTS = [
@@ -13,7 +19,7 @@ const PROJECTS = [
     tech: ["React 19", "TypeScript", "FastAPI", "Supabase", "pgvector", "Gemini", "Docker"],
     metrics: "20,000+ LOC · ~50 teachers · ~60% less prep time",
     link: "https://bi-lgenerator.vercel.app/",
-    visual: { type: "video" as const, src: "/videos/bilchat.mp4", poster: "/images/bilchat-poster.jpg" },
+    visual: { type: "video" as const, src: "/videos/bilchat.mp4", poster: "/videos/bilchat-poster.jpg" },
   },
   {
     name: "RAG Pipeline Evaluation",
@@ -29,7 +35,7 @@ const PROJECTS = [
     name: "YoloMode",
     tagline: "VS Code Extension · \"Stop clicking Accept.\"",
     impact: "Developer automation tool. 3,800+ downloads, 5-star rating.",
-    story: "YoloMode auto-accepts everything in Gemini CLI — agent steps, terminal commands, code edits. Uses Chrome DevTools Protocol to accept steps directly. Hands-free YOLO mode for agentic development.",
+    story: "Developer automation tool for Antigravity IDE and Agent Manager. Auto-accepts agent steps, terminal commands, and code edits — hands-free YOLO mode for agentic development. Uses Chrome DevTools Protocol to accept steps directly in the side panel.",
     tech: ["TypeScript", "VS Code API", "CDP Protocol"],
     metrics: "3,800+ downloads · 5-star · v3.1.1",
     link: "https://marketplace.visualstudio.com/items?itemName=mrkeles61.yolomode",
@@ -43,7 +49,7 @@ const PROJECTS = [
     tech: ["Claude Code", "Apps Script", "Google Workspace"],
     metrics: "1,500+ emails/wk · 11% response · ~2% spam",
     link: "#",
-    visual: { type: "image" as const, src: "/images/email.svg" },
+    visual: { type: "dashboard" as const },
   },
   {
     name: "WellWorks Turkey",
@@ -53,7 +59,7 @@ const PROJECTS = [
     tech: ["React", "Vite", "Tailwind CSS", "Leaflet", "Vercel"],
     metrics: "23-page SPA · ~70% faster dev",
     link: "https://wellworksturkey.com",
-    visual: { type: "video" as const, src: "/videos/wellworks.mp4", poster: "/images/wellworks-poster.jpg" },
+    visual: { type: "video" as const, src: "/videos/wellworks.mp4", poster: "/videos/wellworks-poster.jpg" },
   },
 ];
 
@@ -101,9 +107,10 @@ function useGsapReveal() {
         const { gsap } = await import("gsap");
         const { ScrollTrigger } = await import("gsap/ScrollTrigger");
         gsap.registerPlugin(ScrollTrigger);
-        document.querySelectorAll("[data-reveal]").forEach((el) => {
+        document.querySelectorAll("[data-reveal]").forEach((el, i) => {
           gsap.from(el, {
             y: 40, opacity: 0, duration: 0.8, ease: "power3.out",
+            delay: i * 0.02,
             scrollTrigger: { trigger: el, start: "top 85%", toggleActions: "play none none none" },
           });
         });
@@ -148,85 +155,16 @@ function Nav() {
   );
 }
 
-/* ═══ SVG ROBOT MASCOT ═══ */
-function RobotMascot() {
-  return (
-    <motion.div
-      initial={{ opacity: 0, scale: 0.8 }}
-      animate={{ opacity: 1, scale: 1 }}
-      transition={{ delay: 0.5, duration: 0.8, ease: "easeOut" }}
-      className="relative"
-    >
-      <svg viewBox="0 0 200 240" className="mx-auto w-48 md:w-64" aria-label="Robot mascot">
-        {/* Antenna */}
-        <g className="origin-center" style={{ animation: "bob 3s ease-in-out infinite" }}>
-          <line x1="100" y1="20" x2="100" y2="45" stroke="#D6D3D1" strokeWidth="3" strokeLinecap="round" />
-          <circle cx="100" cy="16" r="6" fill="#EA580C" className="animate-pulse" />
-        </g>
-
-        {/* Head */}
-        <g style={{ animation: "float 4s ease-in-out infinite" }}>
-          <rect x="55" y="45" width="90" height="70" rx="18" fill="#1C1917" />
-          {/* Face plate */}
-          <rect x="62" y="52" width="76" height="56" rx="14" fill="#292524" />
-          {/* Eyes */}
-          <circle cx="82" cy="78" r="8" fill="#EA580C" style={{ animation: "blink 4s ease-in-out infinite" }}>
-            <animate attributeName="ry" values="8;1;8" dur="4s" repeatCount="indefinite" keyTimes="0;0.03;0.06" />
-          </circle>
-          <circle cx="118" cy="78" r="8" fill="#F97316" style={{ animation: "blink 4s ease-in-out infinite 0.1s" }}>
-            <animate attributeName="ry" values="8;1;8" dur="4s" repeatCount="indefinite" keyTimes="0;0.03;0.06" />
-          </circle>
-          {/* Eye shine */}
-          <circle cx="85" cy="75" r="3" fill="#FFF7ED" opacity="0.6" />
-          <circle cx="121" cy="75" r="3" fill="#FFF7ED" opacity="0.6" />
-          {/* Mouth */}
-          <rect x="85" y="95" width="30" height="4" rx="2" fill="#EA580C" opacity="0.5" />
-
-          {/* Body */}
-          <rect x="50" y="120" width="100" height="75" rx="14" fill="#1C1917" />
-          {/* Chest panel */}
-          <rect x="60" y="128" width="80" height="58" rx="10" fill="#292524" />
-          {/* Chest light — heart */}
-          <circle cx="100" cy="152" r="10" fill="#EA580C" opacity="0.8" className="animate-pulse" />
-          <circle cx="100" cy="152" r="5" fill="#F97316" />
-          {/* Panel lines */}
-          <line x1="70" y1="172" x2="130" y2="172" stroke="#44403C" strokeWidth="1" />
-          <line x1="75" y1="178" x2="125" y2="178" stroke="#44403C" strokeWidth="1" />
-
-          {/* Arms */}
-          <rect x="28" y="130" width="18" height="45" rx="9" fill="#292524" />
-          <rect x="154" y="130" width="18" height="45" rx="9" fill="#292524" />
-          {/* Hands */}
-          <circle cx="37" cy="180" r="8" fill="#1C1917" />
-          <circle cx="163" cy="180" r="8" fill="#1C1917" />
-
-          {/* Legs */}
-          <rect x="65" y="198" width="22" height="30" rx="8" fill="#292524" />
-          <rect x="113" y="198" width="22" height="30" rx="8" fill="#292524" />
-          {/* Feet */}
-          <rect x="58" y="225" width="36" height="12" rx="6" fill="#1C1917" />
-          <rect x="106" y="225" width="36" height="12" rx="6" fill="#1C1917" />
-        </g>
-      </svg>
-      <style>{`
-        @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-8px); } }
-        @keyframes bob { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-4px); } }
-        @keyframes blink { 0%, 90%, 100% { transform: scaleY(1); } 95% { transform: scaleY(0.1); } }
-      `}</style>
-    </motion.div>
-  );
-}
-
 function Hero() {
   const name = "Eren Keleş";
   return (
     <section className="relative flex min-h-[90vh] flex-col justify-center px-6 pt-20">
       <div className="pointer-events-none absolute top-1/3 left-1/2 -z-10 h-[500px] w-[700px] -translate-x-1/2 -translate-y-1/2 rounded-full opacity-[0.15]" style={{ background: "radial-gradient(ellipse, #FFF1E0, transparent 70%)" }} />
-      <div className="mx-auto grid w-full max-w-5xl items-center gap-12 md:grid-cols-[1fr_auto]">
+      <div className="mx-auto grid w-full max-w-5xl items-center gap-8 md:grid-cols-[1fr_auto]">
         <div>
           <h1 className="flex flex-wrap" style={{ letterSpacing: "-3px" }}>
             {name.split("").map((c, i) => (
-              <motion.span key={i} initial={{ opacity: 0, y: 50, filter: "blur(8px)" }} animate={{ opacity: 1, y: 0, filter: "blur(0px)" }} transition={{ duration: 0.5, delay: 0.1 + i * 0.04 }} className="inline-block text-[clamp(48px,10vw,72px)] font-black text-[#1C1917]">
+              <motion.span key={i} initial={{ opacity: 0, y: 50, filter: "blur(8px)" }} animate={{ opacity: 1, y: 0, filter: "blur(0px)" }} transition={{ duration: 0.5, delay: 0.1 + i * 0.04, ease: "easeOut" }} className="inline-block text-[clamp(48px,10vw,72px)] font-black text-[#1C1917]">
                 {c === " " ? "\u00A0" : c}
               </motion.span>
             ))}
@@ -244,60 +182,72 @@ function Hero() {
             ))}
           </motion.div>
         </div>
-        <div className="hidden md:block">
-          <RobotMascot />
-        </div>
-      </div>
-      {/* Mobile mascot — smaller, centered above text on small screens */}
-      <div className="absolute top-24 right-6 block md:hidden">
-        <svg viewBox="0 0 200 240" className="w-20 opacity-30" aria-hidden="true">
-          <rect x="55" y="45" width="90" height="70" rx="18" fill="#1C1917" />
-          <circle cx="82" cy="78" r="8" fill="#EA580C" />
-          <circle cx="118" cy="78" r="8" fill="#F97316" />
-          <rect x="50" y="120" width="100" height="75" rx="14" fill="#1C1917" />
-          <circle cx="100" cy="152" r="10" fill="#EA580C" opacity="0.8" />
-        </svg>
+        {/* Lottie animation — hero character */}
+        <motion.div initial={{ opacity: 0, scale: 0.8 }} animate={{ opacity: 1, scale: 1 }} transition={{ delay: 0.5, duration: 0.8 }} className="hidden md:block">
+          <DotLottieReact
+            src="https://lottie.host/2cf110ee-77e0-4150-9a0f-3220965e2e4e/ZhpxkOPabs.lottie"
+            loop
+            autoplay
+            style={{ width: 320, height: 320 }}
+          />
+        </motion.div>
       </div>
     </section>
   );
 }
 
-function CountUp({ target, suffix = "" }: { target: number; suffix?: string }) {
-  const ref = useRef<HTMLSpanElement>(null);
-  const inView = useInView(ref, { once: true });
-  const [val, setVal] = useState(0);
-  useEffect(() => {
-    if (!inView) return;
-    const t0 = performance.now();
-    const step = (now: number) => {
-      const p = Math.min((now - t0) / 1500, 1);
-      setVal(Math.round((1 - Math.pow(1 - p, 3)) * target));
-      if (p < 1) requestAnimationFrame(step);
-    };
-    requestAnimationFrame(step);
-  }, [inView, target]);
-  return <span ref={ref}>{val.toLocaleString()}{suffix}</span>;
-}
-
-function ProofBar() {
+/* ═══ EMAIL OUTREACH MOCK DASHBOARD ═══ */
+function EmailDashboardMock() {
   return (
-    <section className="border-y border-[#E7E5E4] bg-[#FFF7ED] py-12" data-reveal>
-      <div className="mx-auto flex max-w-5xl flex-wrap items-center justify-center gap-8 px-6 text-center md:gap-16">
+    <div className="rounded-2xl bg-[#1C1917] p-5 font-mono text-white shadow-lg sm:p-6">
+      <div className="mb-5 flex items-center justify-between">
+        <div>
+          <p className="text-[10px] uppercase tracking-wider text-stone-400">Outreach Dashboard</p>
+          <p className="text-sm font-medium">Haliç University Campaign</p>
+        </div>
+        <span className="rounded bg-green-500/20 px-2 py-0.5 text-[10px] text-green-400">Live</span>
+      </div>
+      <div className="mb-5 grid grid-cols-2 gap-2 sm:grid-cols-4">
         {[
-          { n: 20000, s: "+", label: "lines of code shipped" },
-          { n: 3800, s: "+", label: "extension downloads" },
-          { n: 86, s: ".2", label: "F1 score (IEEE paper)" },
+          { label: "Sent", val: "1,547", sub: "this week", color: "text-orange-400" },
+          { label: "Opened", val: "623", sub: "40.3%", color: "text-orange-300" },
+          { label: "Replied", val: "170", sub: "11%", color: "text-orange-200" },
+          { label: "Spam", val: "31", sub: "~2%", color: "text-stone-300" },
         ].map((d) => (
-          <div key={d.label}>
-            <p className="font-mono text-3xl font-bold text-[#1C1917] md:text-4xl"><CountUp target={d.n} suffix={d.s} /></p>
-            <p className="mt-1 text-sm text-[#A8A29E]">{d.label}</p>
+          <div key={d.label} className="rounded-lg bg-stone-800 p-2.5">
+            <p className="text-[10px] text-stone-400">{d.label}</p>
+            <p className={`text-lg font-bold ${d.color}`}>{d.val}</p>
+            <p className="text-[10px] text-stone-500">{d.sub}</p>
           </div>
         ))}
       </div>
-    </section>
+      <div className="mb-4">
+        <p className="mb-1.5 text-[10px] text-stone-400">Daily send volume</p>
+        <div className="flex items-end gap-[3px] h-14">
+          {[65, 80, 45, 90, 72, 88, 95, 60, 85, 78, 92, 70, 88, 82].map((h, i) => (
+            <div key={i} className="flex-1 rounded-t bg-orange-500/60 transition-colors hover:bg-orange-400" style={{ height: `${h}%` }} />
+          ))}
+        </div>
+      </div>
+      <div className="space-y-1.5">
+        <p className="text-[10px] text-stone-400">Recent activity</p>
+        {[
+          { dot: "bg-green-400", text: "Reply from TechCorp GmbH — \"Interested, let's schedule...\"", time: "2m ago" },
+          { dot: "bg-blue-400", text: "Opened by 3 recipients at DataFlow Systems", time: "15m ago" },
+          { dot: "bg-orange-400", text: "Auto follow-up sent to 12 contacts (Day 3)", time: "1h ago" },
+        ].map((a, i) => (
+          <div key={i} className="flex items-center gap-2 text-[11px]">
+            <span className={`h-1.5 w-1.5 shrink-0 rounded-full ${a.dot}`} />
+            <span className="truncate text-stone-300">{a.text}</span>
+            <span className="ml-auto shrink-0 text-stone-500">{a.time}</span>
+          </div>
+        ))}
+      </div>
+    </div>
   );
 }
 
+/* ═══ PROJECT VISUAL ═══ */
 function ProjectVisual({ project }: { project: (typeof PROJECTS)[0] }) {
   const ref = useRef<HTMLVideoElement>(null);
   const cRef = useRef<HTMLDivElement>(null);
@@ -309,11 +259,13 @@ function ProjectVisual({ project }: { project: (typeof PROJECTS)[0] }) {
   }, [inView, project.visual.type]);
 
   return (
-    <div ref={cRef} className="overflow-hidden rounded-2xl border border-[#E7E5E4] bg-[#FFF7ED] shadow-[0_8px_32px_rgba(234,88,12,0.06)] transition-transform duration-500 group-hover:scale-[1.02]">
+    <div ref={cRef} className="project-visual overflow-hidden rounded-2xl border border-[#E7E5E4] bg-[#FFF7ED] shadow-[0_8px_32px_rgba(234,88,12,0.06)]">
       {project.visual.type === "video" ? (
-        <video ref={ref} src={project.visual.src} poster={project.visual.poster} muted loop playsInline className="aspect-video w-full object-cover" />
+        <video ref={ref} src={project.visual.src} poster={project.visual.poster} muted loop playsInline preload="metadata" className="aspect-video w-full object-cover" />
+      ) : project.visual.type === "dashboard" ? (
+        <EmailDashboardMock />
       ) : (
-        <img src={project.visual.src} alt={project.name} className="aspect-video w-full object-cover" />
+        <img src={project.visual.src} alt={project.name} className="aspect-video w-full object-cover" loading="lazy" />
       )}
     </div>
   );
@@ -327,7 +279,7 @@ function Projects() {
         <h2 className="mt-2 text-4xl font-bold text-[#1C1917] md:text-5xl" data-reveal>Projects</h2>
         <div className="mt-20 space-y-28">
           {PROJECTS.map((p, i) => (
-            <div key={p.name} className={`group grid items-center gap-10 md:grid-cols-2 ${i % 2 === 1 ? "md:[direction:rtl]" : ""}`} data-reveal>
+            <div key={p.name} className={`project-card group grid items-center gap-10 rounded-2xl p-2 transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_12px_40px_rgba(234,88,12,0.08)] md:grid-cols-2 ${i % 2 === 1 ? "md:[direction:rtl]" : ""}`} data-reveal>
               <div className={i % 2 === 1 ? "md:[direction:ltr]" : ""}><ProjectVisual project={p} /></div>
               <div className={i % 2 === 1 ? "md:[direction:ltr]" : ""}>
                 <p className="font-mono text-xs uppercase tracking-widest text-[#A8A29E]">{p.tagline}</p>
@@ -412,7 +364,7 @@ function Contact() {
 
 function Footer() {
   return (
-    <footer className="bg-[#1C1917] border-t border-[#292524] py-8">
+    <footer className="border-t border-[#292524] bg-[#1C1917] py-8">
       <div className="mx-auto max-w-5xl px-6 text-center text-sm text-[#78716C]">© 2026 Eren Keleş · Built with Next.js</div>
     </footer>
   );
@@ -426,7 +378,6 @@ export default function Home() {
     <>
       <Nav />
       <Hero />
-      <ProofBar />
       <Projects />
       <Experience />
       <TechStack />
