@@ -45,7 +45,7 @@ const PROJECTS = [
     name: "Email Outreach Automation",
     tagline: "Agentic AI System",
     impact: "Agentic email system. 1,500+ emails/week, 11% response rate.",
-    story: "Built an end-to-end outreach pipeline using Claude Code as the AI brain and Google Apps Script for delivery. Auto follow-ups, reply detection, analytics dashboard. Deployed for Haliç University — secured sponsorship deals.",
+    story: "Built an end-to-end outreach pipeline using Claude Code as the AI brain and Google Apps Script for delivery. Auto follow-ups, reply detection, analytics dashboard. Deployed for a university sponsorship campaign — secured deals.",
     tech: ["Claude Code", "Apps Script", "Google Workspace"],
     metrics: "1,500+ emails/wk · 11% response · ~2% spam",
     link: "#",
@@ -63,11 +63,14 @@ const PROJECTS = [
   },
 ];
 
-const EXPERIENCE = [
+const WORK_EXPERIENCE = [
   { period: "2025 – 2026", title: "Software Developer", company: "BilFen Schools, Istanbul", desc: "Sole developer of BilChat AI platform" },
   { period: "2024 – now", title: "Freelance Web Developer", company: "Remote", desc: "AI-augmented development with Claude Code" },
-  { period: "2025", title: "Erasmus+ Exchange", company: "HKA Karlsruhe, Germany", desc: "ML, Agile, AI coursework" },
-  { period: "2022 – 2026", title: "B.Sc. Computer Engineering", company: "Istanbul Kültür University", desc: "Capstone: RAG Pipeline Evaluation (IEEE paper)" },
+];
+
+const EDUCATION = [
+  { period: "2025", title: "Erasmus+ Exchange", school: "HKA Karlsruhe, Germany", desc: "Computer Science — ML, Agile, AI coursework", image: "/images/hka-campus.jpg" },
+  { period: "2022 – 2026", title: "B.Sc. Computer Engineering", school: "Istanbul, Turkey", desc: "Capstone: RAG Pipeline Evaluation (IEEE paper)", image: "/images/iku-campus.jpg" },
 ];
 
 const TECH = [
@@ -145,7 +148,7 @@ function Nav() {
       <nav className="mx-auto flex max-w-5xl items-center justify-between px-6 py-4">
         <button onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })} className="text-lg font-bold tracking-tight text-[#1C1917]">EK</button>
         <div className="flex items-center gap-6 text-sm text-[#57534E]">
-          {[["Work", "work"], ["Experience", "experience"], ["Contact", "contact"]].map(([l, id]) => (
+          {[["Work", "work"], ["Experience", "experience"], ["Education", "education"], ["Contact", "contact"]].map(([l, id]) => (
             <button key={id} onClick={() => to(id)} className="hidden transition-colors hover:text-[#EA580C] sm:block">{l}</button>
           ))}
           <a href="/Eren_Keles_Resume_EN.pdf" target="_blank" className="rounded-full border border-[#E7E5E4] px-3.5 py-1 text-[#1C1917] transition-all hover:border-[#EA580C] hover:text-[#EA580C]">Resume ↗</a>
@@ -161,6 +164,15 @@ function Hero() {
     <section className="relative flex min-h-[90vh] flex-col justify-center px-6 pt-20">
       <div className="pointer-events-none absolute top-1/3 left-1/2 -z-10 h-[500px] w-[700px] -translate-x-1/2 -translate-y-1/2 rounded-full opacity-[0.15]" style={{ background: "radial-gradient(ellipse, #FFF1E0, transparent 70%)" }} />
       <div className="mx-auto grid w-full max-w-5xl items-center gap-8 md:grid-cols-[1fr_auto]">
+        {/* Lottie — mobile only, stacked on top */}
+        <motion.div initial={{ opacity: 0, scale: 0.8 }} animate={{ opacity: 1, scale: 1 }} transition={{ delay: 0.3, duration: 0.8 }} className="flex justify-center md:hidden">
+          <DotLottieReact
+            src="https://lottie.host/4db68bbd-31f6-4cd8-84eb-189de081159a/IGmMCqhzpt.lottie"
+            loop
+            autoplay
+            style={{ width: 200, height: 200 }}
+          />
+        </motion.div>
         <div>
           <h1 className="flex flex-wrap" style={{ letterSpacing: "-3px" }}>
             {name.split("").map((c, i) => (
@@ -185,7 +197,7 @@ function Hero() {
         {/* Lottie animation — hero character */}
         <motion.div initial={{ opacity: 0, scale: 0.8 }} animate={{ opacity: 1, scale: 1 }} transition={{ delay: 0.5, duration: 0.8 }} className="hidden md:block">
           <DotLottieReact
-            src="https://lottie.host/2cf110ee-77e0-4150-9a0f-3220965e2e4e/ZhpxkOPabs.lottie"
+            src="https://lottie.host/4db68bbd-31f6-4cd8-84eb-189de081159a/IGmMCqhzpt.lottie"
             loop
             autoplay
             style={{ width: 320, height: 320 }}
@@ -203,7 +215,7 @@ function EmailDashboardMock() {
       <div className="mb-5 flex items-center justify-between">
         <div>
           <p className="text-[10px] uppercase tracking-wider text-stone-400">Outreach Dashboard</p>
-          <p className="text-sm font-medium">Haliç University Campaign</p>
+          <p className="text-sm font-medium">University Sponsorship Campaign</p>
         </div>
         <span className="rounded bg-green-500/20 px-2 py-0.5 text-[10px] text-green-400">Live</span>
       </div>
@@ -259,9 +271,9 @@ function ProjectVisual({ project }: { project: (typeof PROJECTS)[0] }) {
   }, [inView, project.visual.type]);
 
   return (
-    <div ref={cRef} className="project-visual overflow-hidden rounded-2xl border border-[#E7E5E4] bg-[#FFF7ED] shadow-[0_8px_32px_rgba(234,88,12,0.06)]">
+    <div ref={cRef} className="project-visual overflow-hidden rounded-2xl border border-[#E7E5E4] bg-[#FFF7ED] shadow-[0_8px_32px_rgba(234,88,12,0.06)] transition-transform duration-400 ease-out group-hover:scale-[1.02]">
       {project.visual.type === "video" ? (
-        <video ref={ref} src={project.visual.src} poster={project.visual.poster} muted loop playsInline preload="metadata" className="aspect-video w-full object-cover" />
+        <video ref={ref} src={project.visual.src} poster={project.visual.poster} autoPlay muted loop playsInline preload="metadata" className="aspect-video w-full object-cover" />
       ) : project.visual.type === "dashboard" ? (
         <EmailDashboardMock />
       ) : (
@@ -303,19 +315,45 @@ function Projects() {
   );
 }
 
-function Experience() {
+function WorkExperience() {
   return (
     <section id="experience" className="border-t border-[#E7E5E4] bg-[#FFF7ED] py-32">
       <div className="mx-auto max-w-5xl px-6">
         <p className="font-mono text-xs uppercase tracking-[0.2em] text-[#EA580C]" data-reveal>Background</p>
-        <h2 className="mt-2 text-4xl font-bold text-[#1C1917] md:text-5xl" data-reveal>Experience</h2>
+        <h2 className="mt-2 text-4xl font-bold text-[#1C1917] md:text-5xl" data-reveal>Work Experience</h2>
         <div className="mt-16">
-          {EXPERIENCE.map((e, i) => (
+          {WORK_EXPERIENCE.map((e, i) => (
             <div key={i} className="grid gap-4 border-b border-[#E7E5E4] py-8 md:grid-cols-[180px_1fr]" data-reveal>
               <p className="font-mono text-sm text-[#EA580C]">{e.period}</p>
               <div>
                 <h3 className="text-lg font-semibold text-[#1C1917]">{e.title}</h3>
                 <p className="text-[#57534E]">{e.company}</p>
+                <p className="mt-1 text-sm text-[#A8A29E]">{e.desc}</p>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function EducationSection() {
+  return (
+    <section id="education" className="border-t border-[#E7E5E4] py-32">
+      <div className="mx-auto max-w-5xl px-6">
+        <p className="font-mono text-xs uppercase tracking-[0.2em] text-[#EA580C]" data-reveal>Academic</p>
+        <h2 className="mt-2 text-4xl font-bold text-[#1C1917] md:text-5xl" data-reveal>Education</h2>
+        <div className="mt-16 grid gap-8 md:grid-cols-2">
+          {EDUCATION.map((e, i) => (
+            <div key={i} className="group overflow-hidden rounded-2xl border border-[#E7E5E4] bg-[#FFF7ED]/50 transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_12px_40px_rgba(234,88,12,0.08)]" data-reveal>
+              <div className="aspect-[16/9] overflow-hidden">
+                <img src={e.image} alt={e.title} className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105" loading="lazy" />
+              </div>
+              <div className="p-6">
+                <p className="font-mono text-xs text-[#EA580C]">{e.period}</p>
+                <h3 className="mt-2 text-lg font-semibold text-[#1C1917]">{e.title}</h3>
+                <p className="text-[#57534E]">{e.school}</p>
                 <p className="mt-1 text-sm text-[#A8A29E]">{e.desc}</p>
               </div>
             </div>
@@ -379,7 +417,8 @@ export default function Home() {
       <Nav />
       <Hero />
       <Projects />
-      <Experience />
+      <WorkExperience />
+      <EducationSection />
       <TechStack />
       <Contact />
       <Footer />
