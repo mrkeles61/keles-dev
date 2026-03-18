@@ -1,17 +1,19 @@
 @import "tailwindcss";
 
 @theme inline {
-  --color-bg: #0C0A09;
-  --color-bg-secondary: #1C1917;
-  --color-bg-tertiary: #292524;
-  --color-accent: #F97316;
-  --color-accent-light: #FB923C;
-  --color-text-primary: #FAFAF9;
-  --color-text-secondary: #A8A29E;
-  --color-text-tertiary: #78716C;
-  --color-border: #292524;
-  --color-border-hover: #44403C;
-  --font-display: "Satoshi", "General Sans", system-ui, sans-serif;
+  --color-bg: #FFFBF5;
+  --color-bg-secondary: #FFF7ED;
+  --color-bg-tertiary: #FFF1E0;
+  --color-bg-dark: #1C1917;
+  --color-accent: #EA580C;
+  --color-accent-light: #F97316;
+  --color-accent-muted: #EA580C15;
+  --color-text-primary: #1C1917;
+  --color-text-secondary: #57534E;
+  --color-text-tertiary: #A8A29E;
+  --color-border: #E7E5E4;
+  --color-border-hover: #D6D3D1;
+  --font-display: "Satoshi", system-ui, sans-serif;
   --font-body: "General Sans", "Satoshi", system-ui, sans-serif;
   --font-mono: "JetBrains Mono", "SF Mono", monospace;
 }
@@ -30,25 +32,21 @@
   font-display: swap;
 }
 
-html {
-  scroll-behavior: auto; /* Lenis handles smooth scroll */
-}
+html { scroll-behavior: auto; }
 
 body {
-  background: var(--color-bg);
-  color: var(--color-text-primary);
-  font-family: var(--font-body);
+  background: #FFFBF5;
+  color: #1C1917;
+  font-family: "General Sans", "Satoshi", system-ui, sans-serif;
   -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
 }
 
 ::selection {
-  background: #F9731640;
-  color: #FAFAF9;
+  background: #EA580C30;
+  color: #1C1917;
 }
 
-/* Scrollbar */
 ::-webkit-scrollbar { width: 6px; }
-::-webkit-scrollbar-track { background: #0C0A09; }
-::-webkit-scrollbar-thumb { background: #44403C; border-radius: 3px; }
-::-webkit-scrollbar-thumb:hover { background: #F97316; }
+::-webkit-scrollbar-track { background: #FFFBF5; }
+::-webkit-scrollbar-thumb { background: #D6D3D1; border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: #EA580C; }
