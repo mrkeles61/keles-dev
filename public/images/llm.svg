@@ -1,0 +1,148 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 720" width="1280" height="720">
+  <defs>
+    <linearGradient id="orangeGrad2" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#fb923c"/>
+      <stop offset="100%" stop-color="#f97316"/>
+    </linearGradient>
+    <filter id="glow">
+      <feGaussianBlur stdDeviation="3" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <filter id="glowBig">
+      <feGaussianBlur stdDeviation="6" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <pattern id="scanlines" width="4" height="4" patternUnits="userSpaceOnUse">
+      <line x1="0" y1="0" x2="4" y2="0" stroke="#fb923c" stroke-width="0.3" opacity="0.03"/>
+    </pattern>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1280" height="720" fill="#0a0a12"/>
+  <rect width="1280" height="720" fill="url(#scanlines)"/>
+
+  <!-- Title -->
+  <text x="80" y="100" font-family="system-ui, -apple-system, sans-serif" font-size="48" font-weight="bold" fill="url(#orangeGrad2)" filter="url(#glowBig)">LLM Exam Evaluation</text>
+  <text x="80" y="138" font-family="system-ui, sans-serif" font-size="20" fill="#94a3b8" letter-spacing="2">AI-POWERED GRADING PIPELINE</text>
+
+  <!-- Accuracy metric -->
+  <g transform="translate(900, 60)">
+    <text x="0" y="70" font-family="monospace" font-size="72" font-weight="bold" fill="#fb923c" filter="url(#glowBig)" opacity="0.9">~85%</text>
+    <text x="0" y="100" font-family="system-ui, sans-serif" font-size="20" fill="#64748b">Accuracy</text>
+  </g>
+
+  <!-- Pipeline Flow -->
+  <!-- Step 1: Photo/Scan -->
+  <g transform="translate(80, 240)">
+    <rect x="0" y="0" width="220" height="140" rx="12" fill="#1a1008" stroke="#fb923c" stroke-width="2"/>
+    <text x="110" y="30" font-family="monospace" font-size="13" fill="#64748b" text-anchor="middle">STEP 1</text>
+    <!-- Document/scan icon -->
+    <g transform="translate(70, 40)">
+      <rect x="0" y="0" width="60" height="75" rx="4" fill="none" stroke="#fb923c" stroke-width="1.5" opacity="0.7"/>
+      <rect x="15" y="5" width="30" height="3" rx="1" fill="#fb923c" opacity="0.4"/>
+      <line x1="10" y1="18" x2="50" y2="18" stroke="#fb923c" stroke-width="1" opacity="0.3"/>
+      <line x1="10" y1="28" x2="50" y2="28" stroke="#fb923c" stroke-width="1" opacity="0.3"/>
+      <line x1="10" y1="38" x2="40" y2="38" stroke="#fb923c" stroke-width="1" opacity="0.3"/>
+      <line x1="10" y1="48" x2="45" y2="48" stroke="#fb923c" stroke-width="1" opacity="0.3"/>
+      <line x1="10" y1="58" x2="35" y2="58" stroke="#fb923c" stroke-width="1" opacity="0.3"/>
+      <!-- Camera icon overlay -->
+      <circle cx="45" cy="60" r="10" fill="#0a0a12" stroke="#fb923c" stroke-width="1.5"/>
+      <circle cx="45" cy="60" r="5" fill="#fb923c" opacity="0.5"/>
+    </g>
+    <text x="110" y="130" font-family="system-ui, sans-serif" font-size="18" font-weight="bold" fill="#fb923c" text-anchor="middle">Photo Capture</text>
+  </g>
+
+  <!-- Arrow 1 -->
+  <g filter="url(#glow)">
+    <line x1="300" y1="310" x2="360" y2="310" stroke="#fb923c" stroke-width="2" opacity="0.5"/>
+    <polygon points="355,305 370,310 355,315" fill="#fb923c" opacity="0.5"/>
+  </g>
+
+  <!-- Step 2: OCR -->
+  <g transform="translate(370, 240)">
+    <rect x="0" y="0" width="220" height="140" rx="12" fill="#1a1008" stroke="#fb923c" stroke-width="2"/>
+    <text x="110" y="30" font-family="monospace" font-size="13" fill="#64748b" text-anchor="middle">STEP 2</text>
+    <!-- OCR visualization -->
+    <g transform="translate(50, 42)">
+      <rect x="0" y="0" width="120" height="70" rx="4" fill="none" stroke="#fb923c" stroke-width="1" opacity="0.4"/>
+      <!-- Scanning line -->
+      <line x1="5" y1="15" x2="115" y2="15" stroke="#fb923c" stroke-width="2" opacity="0.6"/>
+      <!-- Text lines being extracted -->
+      <text x="10" y="35" font-family="monospace" font-size="9" fill="#fb923c" opacity="0.5">ABC DEF</text>
+      <text x="10" y="48" font-family="monospace" font-size="9" fill="#fb923c" opacity="0.5">x + 2 = 7</text>
+      <text x="10" y="61" font-family="monospace" font-size="9" fill="#fb923c" opacity="0.5">ans: 5</text>
+    </g>
+    <text x="110" y="130" font-family="system-ui, sans-serif" font-size="18" font-weight="bold" fill="#fb923c" text-anchor="middle">OCR Extract</text>
+  </g>
+
+  <!-- Arrow 2 -->
+  <g filter="url(#glow)">
+    <line x1="590" y1="310" x2="650" y2="310" stroke="#fb923c" stroke-width="2" opacity="0.5"/>
+    <polygon points="645,305 660,310 645,315" fill="#fb923c" opacity="0.5"/>
+  </g>
+
+  <!-- Step 3: Mistral -->
+  <g transform="translate(660, 240)">
+    <rect x="0" y="0" width="220" height="140" rx="12" fill="#1a1008" stroke="#fb923c" stroke-width="2"/>
+    <text x="110" y="30" font-family="monospace" font-size="13" fill="#64748b" text-anchor="middle">STEP 3</text>
+    <!-- AI/Brain icon -->
+    <g transform="translate(65, 40)">
+      <circle cx="45" cy="35" r="30" fill="none" stroke="#fb923c" stroke-width="1.5" opacity="0.5"/>
+      <circle cx="35" cy="25" r="4" fill="#fb923c" opacity="0.5"/>
+      <circle cx="55" cy="25" r="4" fill="#fb923c" opacity="0.5"/>
+      <circle cx="45" cy="45" r="4" fill="#fb923c" opacity="0.5"/>
+      <line x1="35" y1="25" x2="55" y2="25" stroke="#fb923c" stroke-width="1" opacity="0.4"/>
+      <line x1="35" y1="25" x2="45" y2="45" stroke="#fb923c" stroke-width="1" opacity="0.4"/>
+      <line x1="55" y1="25" x2="45" y2="45" stroke="#fb923c" stroke-width="1" opacity="0.4"/>
+    </g>
+    <text x="110" y="130" font-family="system-ui, sans-serif" font-size="18" font-weight="bold" fill="#fb923c" text-anchor="middle">Mistral LLM</text>
+  </g>
+
+  <!-- Arrow 3 -->
+  <g filter="url(#glow)">
+    <line x1="880" y1="310" x2="940" y2="310" stroke="#fb923c" stroke-width="2" opacity="0.5"/>
+    <polygon points="935,305 950,310 935,315" fill="#fb923c" opacity="0.5"/>
+  </g>
+
+  <!-- Step 4: Score -->
+  <g transform="translate(950, 240)">
+    <rect x="0" y="0" width="220" height="140" rx="12" fill="#201508" stroke="#fb923c" stroke-width="2.5"/>
+    <text x="110" y="30" font-family="monospace" font-size="13" fill="#64748b" text-anchor="middle">STEP 4</text>
+    <!-- Score display -->
+    <text x="110" y="90" font-family="monospace" font-size="48" font-weight="bold" fill="#fb923c" text-anchor="middle" filter="url(#glow)">92/100</text>
+    <text x="110" y="130" font-family="system-ui, sans-serif" font-size="18" font-weight="bold" fill="#e9d5ff" text-anchor="middle" fill="#fb923c">Score Output</text>
+  </g>
+
+  <!-- Additional info -->
+  <g transform="translate(80, 440)">
+    <rect x="0" y="0" width="260" height="70" rx="10" fill="#0f0a05" stroke="#fb923c" stroke-width="1" opacity="0.7"/>
+    <text x="130" y="30" font-family="monospace" font-size="17" font-weight="bold" fill="#fb923c" text-anchor="middle">Multi-Subject</text>
+    <text x="130" y="52" font-family="system-ui, sans-serif" font-size="13" fill="#64748b" text-anchor="middle">Math, Science, Literature</text>
+  </g>
+  <g transform="translate(360, 440)">
+    <rect x="0" y="0" width="260" height="70" rx="10" fill="#0f0a05" stroke="#fb923c" stroke-width="1" opacity="0.7"/>
+    <text x="130" y="30" font-family="monospace" font-size="17" font-weight="bold" fill="#fb923c" text-anchor="middle">Rubric-Based</text>
+    <text x="130" y="52" font-family="system-ui, sans-serif" font-size="13" fill="#64748b" text-anchor="middle">Custom Answer Keys</text>
+  </g>
+
+  <!-- Tech Badges -->
+  <g transform="translate(80, 570)">
+    <rect x="0" y="0" width="85" height="32" rx="6" fill="#0f172a" stroke="#fb923c" stroke-width="1"/>
+    <text x="42" y="21" font-family="monospace" font-size="13" fill="#fb923c" text-anchor="middle">Python</text>
+
+    <rect x="100" y="0" width="85" height="32" rx="6" fill="#0f172a" stroke="#fb923c" stroke-width="1"/>
+    <text x="142" y="21" font-family="monospace" font-size="13" fill="#fb923c" text-anchor="middle">Mistral</text>
+
+    <rect x="200" y="0" width="110" height="32" rx="6" fill="#0f172a" stroke="#fb923c" stroke-width="1"/>
+    <text x="255" y="21" font-family="monospace" font-size="13" fill="#fb923c" text-anchor="middle">Tesseract</text>
+
+    <rect x="325" y="0" width="90" height="32" rx="6" fill="#0f172a" stroke="#fb923c" stroke-width="1"/>
+    <text x="370" y="21" font-family="monospace" font-size="13" fill="#fb923c" text-anchor="middle">FastAPI</text>
+
+    <rect x="430" y="0" width="90" height="32" rx="6" fill="#0f172a" stroke="#fb923c" stroke-width="1"/>
+    <text x="475" y="21" font-family="monospace" font-size="13" fill="#fb923c" text-anchor="middle">OpenCV</text>
+  </g>
+
+  <!-- Bottom accent line -->
+  <rect x="0" y="716" width="1280" height="4" fill="url(#orangeGrad2)" opacity="0.6"/>
+</svg>

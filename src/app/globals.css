@@ -1,26 +1,54 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-bg: #0C0A09;
+  --color-bg-secondary: #1C1917;
+  --color-bg-tertiary: #292524;
+  --color-accent: #F97316;
+  --color-accent-light: #FB923C;
+  --color-text-primary: #FAFAF9;
+  --color-text-secondary: #A8A29E;
+  --color-text-tertiary: #78716C;
+  --color-border: #292524;
+  --color-border-hover: #44403C;
+  --font-display: "Satoshi", "General Sans", system-ui, sans-serif;
+  --font-body: "General Sans", "Satoshi", system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", "SF Mono", monospace;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+@font-face {
+  font-family: "Satoshi";
+  src: url("https://cdn.fontshare.com/wf/CQHYXLVD2RXTJ5VVQD4DMLKK7JMTQHY/XAP3IYLJNTQXFYPUADXBPG3KXJJJYRXQ/KQJN67YH4MKNLBMRZ5RQSF5P6BWWFQ6O.woff2") format("woff2");
+  font-weight: 400 900;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "General Sans";
+  src: url("https://cdn.fontshare.com/wf/FPLHKNYYRHPK3I3KTTGBJ76RZ4A4CLHW/UY5PN4GK7BCLTVLYMNRXG7EP5YGMTFM7/GSWSBJF5NBLV3GXPMRIHLJHQE7OVWXRW.woff2") format("woff2");
+  font-weight: 400 700;
+  font-display: swap;
+}
+
+html {
+  scroll-behavior: auto; /* Lenis handles smooth scroll */
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background: var(--color-bg);
+  color: var(--color-text-primary);
+  font-family: var(--font-body);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
+
+::selection {
+  background: #F9731640;
+  color: #FAFAF9;
+}
+
+/* Scrollbar */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: #0C0A09; }
+::-webkit-scrollbar-thumb { background: #44403C; border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: #F97316; }

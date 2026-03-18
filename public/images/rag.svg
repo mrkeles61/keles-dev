@@ -1,0 +1,141 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 720" width="1280" height="720">
+  <defs>
+    <linearGradient id="purpleGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#a78bfa"/>
+      <stop offset="100%" stop-color="#7c3aed"/>
+    </linearGradient>
+    <filter id="glow">
+      <feGaussianBlur stdDeviation="3" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <filter id="glowBig">
+      <feGaussianBlur stdDeviation="6" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <pattern id="dots" width="30" height="30" patternUnits="userSpaceOnUse">
+      <circle cx="15" cy="15" r="1" fill="#a78bfa" opacity="0.08"/>
+    </pattern>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1280" height="720" fill="#0a0a1a"/>
+  <rect width="1280" height="720" fill="url(#dots)"/>
+
+  <!-- Title -->
+  <text x="80" y="100" font-family="system-ui, -apple-system, sans-serif" font-size="52" font-weight="bold" fill="url(#purpleGrad)" filter="url(#glowBig)">RAG Pipeline</text>
+  <text x="80" y="140" font-family="system-ui, sans-serif" font-size="20" fill="#94a3b8" letter-spacing="2">HYBRID RETRIEVAL-AUGMENTED GENERATION</text>
+
+  <!-- IEEE Badge -->
+  <g transform="translate(80, 160)">
+    <rect x="0" y="0" width="140" height="34" rx="17" fill="#1e1040" stroke="#a78bfa" stroke-width="1.5"/>
+    <text x="70" y="22" font-family="monospace" font-size="14" font-weight="bold" fill="#a78bfa" text-anchor="middle">IEEE Paper</text>
+  </g>
+
+  <!-- Big F1 Score -->
+  <g transform="translate(900, 60)">
+    <text x="0" y="70" font-family="monospace" font-size="80" font-weight="bold" fill="#a78bfa" filter="url(#glowBig)" opacity="0.9">86.2</text>
+    <text x="0" y="100" font-family="system-ui, sans-serif" font-size="22" fill="#64748b">F1 Score</text>
+  </g>
+
+  <!-- Flow Diagram -->
+  <!-- Step 1: Query -->
+  <g transform="translate(80, 280)">
+    <rect x="0" y="0" width="180" height="100" rx="12" fill="#110e24" stroke="#a78bfa" stroke-width="2"/>
+    <text x="90" y="40" font-family="monospace" font-size="14" fill="#64748b" text-anchor="middle">STEP 1</text>
+    <text x="90" y="68" font-family="system-ui, sans-serif" font-size="20" font-weight="bold" fill="#a78bfa" text-anchor="middle">Query</text>
+    <!-- Search icon -->
+    <circle cx="90" cy="15" r="0" fill="none"/>
+  </g>
+
+  <!-- Arrow 1 -->
+  <g filter="url(#glow)">
+    <line x1="260" y1="330" x2="330" y2="330" stroke="#a78bfa" stroke-width="2" opacity="0.6"/>
+    <polygon points="330,325 340,330 330,335" fill="#a78bfa" opacity="0.6"/>
+  </g>
+
+  <!-- Step 2: FAISS -->
+  <g transform="translate(340, 280)">
+    <rect x="0" y="0" width="180" height="100" rx="12" fill="#110e24" stroke="#a78bfa" stroke-width="2"/>
+    <text x="90" y="40" font-family="monospace" font-size="14" fill="#64748b" text-anchor="middle">STEP 2</text>
+    <text x="90" y="68" font-family="system-ui, sans-serif" font-size="20" font-weight="bold" fill="#a78bfa" text-anchor="middle">FAISS</text>
+    <!-- Vector icon -->
+    <g transform="translate(60, 75)" opacity="0.4">
+      <rect x="0" y="0" width="8" height="15" fill="#a78bfa"/>
+      <rect x="12" y="5" width="8" height="10" fill="#a78bfa"/>
+      <rect x="24" y="2" width="8" height="13" fill="#a78bfa"/>
+      <rect x="36" y="8" width="8" height="7" fill="#a78bfa"/>
+      <rect x="48" y="0" width="8" height="15" fill="#a78bfa"/>
+    </g>
+  </g>
+
+  <!-- Arrow 2 -->
+  <g filter="url(#glow)">
+    <line x1="520" y1="330" x2="590" y2="330" stroke="#a78bfa" stroke-width="2" opacity="0.6"/>
+    <polygon points="590,325 600,330 590,335" fill="#a78bfa" opacity="0.6"/>
+  </g>
+
+  <!-- Step 3: ColBERT -->
+  <g transform="translate(600, 280)">
+    <rect x="0" y="0" width="180" height="100" rx="12" fill="#110e24" stroke="#a78bfa" stroke-width="2"/>
+    <text x="90" y="40" font-family="monospace" font-size="14" fill="#64748b" text-anchor="middle">STEP 3</text>
+    <text x="90" y="68" font-family="system-ui, sans-serif" font-size="20" font-weight="bold" fill="#a78bfa" text-anchor="middle">ColBERT</text>
+    <!-- Rerank icon -->
+    <g transform="translate(55, 75)" opacity="0.4">
+      <line x1="0" y1="15" x2="70" y2="0" stroke="#a78bfa" stroke-width="2"/>
+      <circle cx="0" cy="15" r="4" fill="#a78bfa"/>
+      <circle cx="35" cy="7" r="4" fill="#a78bfa"/>
+      <circle cx="70" cy="0" r="4" fill="#a78bfa"/>
+    </g>
+  </g>
+
+  <!-- Arrow 3 -->
+  <g filter="url(#glow)">
+    <line x1="780" y1="330" x2="850" y2="330" stroke="#a78bfa" stroke-width="2" opacity="0.6"/>
+    <polygon points="850,325 860,330 850,335" fill="#a78bfa" opacity="0.6"/>
+  </g>
+
+  <!-- Step 4: Answer -->
+  <g transform="translate(860, 280)">
+    <rect x="0" y="0" width="180" height="100" rx="12" fill="#1e1040" stroke="#a78bfa" stroke-width="2.5"/>
+    <text x="90" y="40" font-family="monospace" font-size="14" fill="#64748b" text-anchor="middle">STEP 4</text>
+    <text x="90" y="68" font-family="system-ui, sans-serif" font-size="20" font-weight="bold" fill="#e9d5ff" text-anchor="middle">Answer</text>
+  </g>
+
+  <!-- Additional metrics row -->
+  <g transform="translate(80, 450)">
+    <rect x="0" y="0" width="220" height="70" rx="10" fill="#0f0a20" stroke="#a78bfa" stroke-width="1" opacity="0.7"/>
+    <text x="110" y="30" font-family="monospace" font-size="18" font-weight="bold" fill="#a78bfa" text-anchor="middle">+12.4%</text>
+    <text x="110" y="52" font-family="system-ui, sans-serif" font-size="13" fill="#64748b" text-anchor="middle">vs BM25 baseline</text>
+  </g>
+  <g transform="translate(320, 450)">
+    <rect x="0" y="0" width="220" height="70" rx="10" fill="#0f0a20" stroke="#a78bfa" stroke-width="1" opacity="0.7"/>
+    <text x="110" y="30" font-family="monospace" font-size="18" font-weight="bold" fill="#a78bfa" text-anchor="middle">Hybrid</text>
+    <text x="110" y="52" font-family="system-ui, sans-serif" font-size="13" fill="#64748b" text-anchor="middle">Dense + Sparse Retrieval</text>
+  </g>
+  <g transform="translate(560, 450)">
+    <rect x="0" y="0" width="220" height="70" rx="10" fill="#0f0a20" stroke="#a78bfa" stroke-width="1" opacity="0.7"/>
+    <text x="110" y="30" font-family="monospace" font-size="18" font-weight="bold" fill="#a78bfa" text-anchor="middle">SQuAD 2.0</text>
+    <text x="110" y="52" font-family="system-ui, sans-serif" font-size="13" fill="#64748b" text-anchor="middle">Benchmark Dataset</text>
+  </g>
+
+  <!-- Tech Badges -->
+  <g transform="translate(80, 580)">
+    <rect x="0" y="0" width="85" height="32" rx="6" fill="#0f172a" stroke="#a78bfa" stroke-width="1"/>
+    <text x="42" y="21" font-family="monospace" font-size="13" fill="#a78bfa" text-anchor="middle">Python</text>
+
+    <rect x="100" y="0" width="80" height="32" rx="6" fill="#0f172a" stroke="#a78bfa" stroke-width="1"/>
+    <text x="140" y="21" font-family="monospace" font-size="13" fill="#a78bfa" text-anchor="middle">FAISS</text>
+
+    <rect x="195" y="0" width="95" height="32" rx="6" fill="#0f172a" stroke="#a78bfa" stroke-width="1"/>
+    <text x="242" y="21" font-family="monospace" font-size="13" fill="#a78bfa" text-anchor="middle">ColBERT</text>
+
+    <rect x="305" y="0" width="120" height="32" rx="6" fill="#0f172a" stroke="#a78bfa" stroke-width="1"/>
+    <text x="365" y="21" font-family="monospace" font-size="13" fill="#a78bfa" text-anchor="middle">Transformers</text>
+
+    <rect x="440" y="0" width="90" height="32" rx="6" fill="#0f172a" stroke="#a78bfa" stroke-width="1"/>
+    <text x="485" y="21" font-family="monospace" font-size="13" fill="#a78bfa" text-anchor="middle">PyTorch</text>
+  </g>
+
+  <!-- Bottom accent line -->
+  <rect x="0" y="716" width="1280" height="4" fill="url(#purpleGrad)" opacity="0.6"/>
+</svg>
