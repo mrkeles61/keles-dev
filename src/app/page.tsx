@@ -148,31 +148,115 @@ function Nav() {
   );
 }
 
+/* ═══ SVG ROBOT MASCOT ═══ */
+function RobotMascot() {
+  return (
+    <motion.div
+      initial={{ opacity: 0, scale: 0.8 }}
+      animate={{ opacity: 1, scale: 1 }}
+      transition={{ delay: 0.5, duration: 0.8, ease: "easeOut" }}
+      className="relative"
+    >
+      <svg viewBox="0 0 200 240" className="mx-auto w-48 md:w-64" aria-label="Robot mascot">
+        {/* Antenna */}
+        <g className="origin-center" style={{ animation: "bob 3s ease-in-out infinite" }}>
+          <line x1="100" y1="20" x2="100" y2="45" stroke="#D6D3D1" strokeWidth="3" strokeLinecap="round" />
+          <circle cx="100" cy="16" r="6" fill="#EA580C" className="animate-pulse" />
+        </g>
+
+        {/* Head */}
+        <g style={{ animation: "float 4s ease-in-out infinite" }}>
+          <rect x="55" y="45" width="90" height="70" rx="18" fill="#1C1917" />
+          {/* Face plate */}
+          <rect x="62" y="52" width="76" height="56" rx="14" fill="#292524" />
+          {/* Eyes */}
+          <circle cx="82" cy="78" r="8" fill="#EA580C" style={{ animation: "blink 4s ease-in-out infinite" }}>
+            <animate attributeName="ry" values="8;1;8" dur="4s" repeatCount="indefinite" keyTimes="0;0.03;0.06" />
+          </circle>
+          <circle cx="118" cy="78" r="8" fill="#F97316" style={{ animation: "blink 4s ease-in-out infinite 0.1s" }}>
+            <animate attributeName="ry" values="8;1;8" dur="4s" repeatCount="indefinite" keyTimes="0;0.03;0.06" />
+          </circle>
+          {/* Eye shine */}
+          <circle cx="85" cy="75" r="3" fill="#FFF7ED" opacity="0.6" />
+          <circle cx="121" cy="75" r="3" fill="#FFF7ED" opacity="0.6" />
+          {/* Mouth */}
+          <rect x="85" y="95" width="30" height="4" rx="2" fill="#EA580C" opacity="0.5" />
+
+          {/* Body */}
+          <rect x="50" y="120" width="100" height="75" rx="14" fill="#1C1917" />
+          {/* Chest panel */}
+          <rect x="60" y="128" width="80" height="58" rx="10" fill="#292524" />
+          {/* Chest light — heart */}
+          <circle cx="100" cy="152" r="10" fill="#EA580C" opacity="0.8" className="animate-pulse" />
+          <circle cx="100" cy="152" r="5" fill="#F97316" />
+          {/* Panel lines */}
+          <line x1="70" y1="172" x2="130" y2="172" stroke="#44403C" strokeWidth="1" />
+          <line x1="75" y1="178" x2="125" y2="178" stroke="#44403C" strokeWidth="1" />
+
+          {/* Arms */}
+          <rect x="28" y="130" width="18" height="45" rx="9" fill="#292524" />
+          <rect x="154" y="130" width="18" height="45" rx="9" fill="#292524" />
+          {/* Hands */}
+          <circle cx="37" cy="180" r="8" fill="#1C1917" />
+          <circle cx="163" cy="180" r="8" fill="#1C1917" />
+
+          {/* Legs */}
+          <rect x="65" y="198" width="22" height="30" rx="8" fill="#292524" />
+          <rect x="113" y="198" width="22" height="30" rx="8" fill="#292524" />
+          {/* Feet */}
+          <rect x="58" y="225" width="36" height="12" rx="6" fill="#1C1917" />
+          <rect x="106" y="225" width="36" height="12" rx="6" fill="#1C1917" />
+        </g>
+      </svg>
+      <style>{`
+        @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-8px); } }
+        @keyframes bob { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-4px); } }
+        @keyframes blink { 0%, 90%, 100% { transform: scaleY(1); } 95% { transform: scaleY(0.1); } }
+      `}</style>
+    </motion.div>
+  );
+}
+
 function Hero() {
   const name = "Eren Keleş";
   return (
     <section className="relative flex min-h-[90vh] flex-col justify-center px-6 pt-20">
       <div className="pointer-events-none absolute top-1/3 left-1/2 -z-10 h-[500px] w-[700px] -translate-x-1/2 -translate-y-1/2 rounded-full opacity-[0.15]" style={{ background: "radial-gradient(ellipse, #FFF1E0, transparent 70%)" }} />
-      <div className="mx-auto w-full max-w-5xl">
-        <h1 className="flex flex-wrap" style={{ letterSpacing: "-3px" }}>
-          {name.split("").map((c, i) => (
-            <motion.span key={i} initial={{ opacity: 0, y: 50, filter: "blur(8px)" }} animate={{ opacity: 1, y: 0, filter: "blur(0px)" }} transition={{ duration: 0.5, delay: 0.1 + i * 0.04 }} className="inline-block text-[clamp(48px,10vw,88px)] font-black text-[#1C1917]">
-              {c === " " ? "\u00A0" : c}
-            </motion.span>
-          ))}
-        </h1>
-        <motion.p initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.65 }} className="mt-3 text-xl font-medium text-[#EA580C] md:text-2xl">
-          AI Developer & Automation Engineer
-        </motion.p>
-        <motion.p initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.85 }} className="mt-5 max-w-xl text-lg leading-relaxed text-[#57534E]">
-          I build AI systems that ship — from a 20,000-line platform serving 50+ teachers to published research. Currently seeking an Erasmus+ traineeship in Europe.
-        </motion.p>
-        <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 1.1 }} className="mt-8 flex flex-wrap gap-3">
-          <button onClick={() => document.getElementById("work")?.scrollIntoView({ behavior: "smooth" })} className="rounded-full bg-[#EA580C] px-6 py-2.5 text-sm font-semibold text-white transition-all hover:bg-[#C2410C]">View Work ↓</button>
-          {SOCIALS.map((s) => (
-            <a key={s.label} href={s.href} target={s.href.startsWith("http") ? "_blank" : undefined} rel="noopener noreferrer" className="rounded-full border border-[#E7E5E4] px-5 py-2.5 text-sm text-[#57534E] transition-all hover:border-[#EA580C] hover:text-[#EA580C]">{s.label}</a>
-          ))}
-        </motion.div>
+      <div className="mx-auto grid w-full max-w-5xl items-center gap-12 md:grid-cols-[1fr_auto]">
+        <div>
+          <h1 className="flex flex-wrap" style={{ letterSpacing: "-3px" }}>
+            {name.split("").map((c, i) => (
+              <motion.span key={i} initial={{ opacity: 0, y: 50, filter: "blur(8px)" }} animate={{ opacity: 1, y: 0, filter: "blur(0px)" }} transition={{ duration: 0.5, delay: 0.1 + i * 0.04 }} className="inline-block text-[clamp(48px,10vw,72px)] font-black text-[#1C1917]">
+                {c === " " ? "\u00A0" : c}
+              </motion.span>
+            ))}
+          </h1>
+          <motion.p initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.65 }} className="mt-3 text-xl font-medium text-[#EA580C] md:text-2xl">
+            AI Developer & Automation Engineer
+          </motion.p>
+          <motion.p initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.85 }} className="mt-5 max-w-xl text-lg leading-relaxed text-[#57534E]">
+            I build AI systems that ship — from a 20,000-line platform serving 50+ teachers to published research. Currently seeking an Erasmus+ traineeship in Europe.
+          </motion.p>
+          <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 1.1 }} className="mt-8 flex flex-wrap gap-3">
+            <button onClick={() => document.getElementById("work")?.scrollIntoView({ behavior: "smooth" })} className="rounded-full bg-[#EA580C] px-6 py-2.5 text-sm font-semibold text-white transition-all hover:bg-[#C2410C]">View Work ↓</button>
+            {SOCIALS.map((s) => (
+              <a key={s.label} href={s.href} target={s.href.startsWith("http") ? "_blank" : undefined} rel="noopener noreferrer" className="rounded-full border border-[#E7E5E4] px-5 py-2.5 text-sm text-[#57534E] transition-all hover:border-[#EA580C] hover:text-[#EA580C]">{s.label}</a>
+            ))}
+          </motion.div>
+        </div>
+        <div className="hidden md:block">
+          <RobotMascot />
+        </div>
+      </div>
+      {/* Mobile mascot — smaller, centered above text on small screens */}
+      <div className="absolute top-24 right-6 block md:hidden">
+        <svg viewBox="0 0 200 240" className="w-20 opacity-30" aria-hidden="true">
+          <rect x="55" y="45" width="90" height="70" rx="18" fill="#1C1917" />
+          <circle cx="82" cy="78" r="8" fill="#EA580C" />
+          <circle cx="118" cy="78" r="8" fill="#F97316" />
+          <rect x="50" y="120" width="100" height="75" rx="14" fill="#1C1917" />
+          <circle cx="100" cy="152" r="10" fill="#EA580C" opacity="0.8" />
+        </svg>
       </div>
     </section>
   );
