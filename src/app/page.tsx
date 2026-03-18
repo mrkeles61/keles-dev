@@ -1,13 +1,7 @@
 "use client";
 
-import { useEffect, useRef, useState, type ReactNode } from "react";
+import { useEffect, useRef, useState } from "react";
 import { motion, useInView } from "framer-motion";
-import dynamic from "next/dynamic";
-
-const DotLottieReact = dynamic(
-  () => import("@lottiefiles/dotlottie-react").then((m) => m.DotLottieReact),
-  { ssr: false, loading: () => <div className="h-[300px] w-[300px]" /> },
-);
 
 /* ═══ DATA ═══ */
 const PROJECTS = [
@@ -80,24 +74,37 @@ const TECH = [
   { cat: "Tools", skills: "VS Code Extension Dev, Git, Vercel, FAISS, HuggingFace" },
 ];
 
-const SOCIALS = [
-  { label: "GitHub", href: "https://github.com/mrkeles61" },
-  { label: "LinkedIn", href: "https://linkedin.com/in/erenkeles615" },
-  { label: "Resume", href: "/Eren_Keles_Resume_EN.pdf" },
-  { label: "Email", href: "mailto:eren@keles.dev" },
-];
+/* ═══ SVG ICONS ═══ */
+const GithubIcon = () => (
+  <svg viewBox="0 0 24 24" fill="currentColor" className="h-5 w-5">
+    <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z" />
+  </svg>
+);
+
+const LinkedInIcon = () => (
+  <svg viewBox="0 0 24 24" fill="currentColor" className="h-5 w-5">
+    <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z" />
+  </svg>
+);
+
+const MailIcon = () => (
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="h-5 w-5">
+    <rect x="2" y="4" width="20" height="16" rx="2" />
+    <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7" />
+  </svg>
+);
 
 /* ═══ HOOKS ═══ */
 function useLenis() {
   useEffect(() => {
-    let l: any;
+    let l: { destroy: () => void; raf: (t: number) => void } | undefined;
     (async () => {
       try {
         const Lenis = (await import("lenis")).default;
         l = new Lenis({ duration: 1.2 });
-        const raf = (t: number) => { l.raf(t); requestAnimationFrame(raf); };
+        const raf = (t: number) => { l!.raf(t); requestAnimationFrame(raf); };
         requestAnimationFrame(raf);
-      } catch {}
+      } catch { /* lenis optional */ }
     })();
     return () => l?.destroy();
   }, []);
@@ -117,12 +124,12 @@ function useGsapReveal() {
             scrollTrigger: { trigger: el, start: "top 85%", toggleActions: "play none none none" },
           });
         });
-      } catch {}
+      } catch { /* gsap optional */ }
     })();
   }, []);
 }
 
-/* ═══ COMPONENTS ═══ */
+/* ═══ NAV — minimal: wordmark left, About + Contact right ═══ */
 function Nav() {
   const [scrolled, setScrolled] = useState(false);
   const [hidden, setHidden] = useState(false);
@@ -146,62 +153,43 @@ function Nav() {
       transition={{ duration: 0.3 }}
     >
       <nav className="mx-auto flex max-w-5xl items-center justify-between px-6 py-4">
-        <button onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })} className="text-lg font-bold tracking-tight text-[#1C1917]">EK</button>
-        <div className="flex items-center gap-6 text-sm text-[#57534E]">
-          {[["Work", "work"], ["Experience", "experience"], ["Education", "education"], ["Contact", "contact"]].map(([l, id]) => (
-            <button key={id} onClick={() => to(id)} className="hidden transition-colors hover:text-[#EA580C] sm:block">{l}</button>
-          ))}
-          <a href="/Eren_Keles_Resume_EN.pdf" target="_blank" className="rounded-full border border-[#E7E5E4] px-3.5 py-1 text-[#1C1917] transition-all hover:border-[#EA580C] hover:text-[#EA580C]">Resume ↗</a>
+        <button onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })} className="text-lg font-extrabold tracking-[-0.03em] text-[#1C1917]">
+          Eren Keleş
+        </button>
+        <div className="flex items-center gap-8 text-sm text-[#57534E]">
+          <button onClick={() => to("experience")} className="transition-colors hover:text-[#EA580C]">About</button>
+          <button onClick={() => to("contact")} className="transition-colors hover:text-[#EA580C]">Contact</button>
         </div>
       </nav>
     </motion.header>
   );
 }
 
+/* ═══ HERO — text only, no mascot, icon socials ═══ */
 function Hero() {
   const name = "Eren Keleş";
   return (
     <section className="relative flex min-h-[90vh] flex-col justify-center px-6 pt-20">
-      <div className="pointer-events-none absolute top-1/3 left-1/2 -z-10 h-[500px] w-[700px] -translate-x-1/2 -translate-y-1/2 rounded-full opacity-[0.15]" style={{ background: "radial-gradient(ellipse, #FFF1E0, transparent 70%)" }} />
-      <div className="mx-auto grid w-full max-w-5xl items-center gap-8 md:grid-cols-[1fr_auto]">
-        {/* Lottie — mobile only, stacked on top */}
-        <motion.div initial={{ opacity: 0, scale: 0.8 }} animate={{ opacity: 1, scale: 1 }} transition={{ delay: 0.3, duration: 0.8 }} className="flex justify-center md:hidden">
-          <DotLottieReact
-            src="https://lottie.host/4db68bbd-31f6-4cd8-84eb-189de081159a/IGmMCqhzpt.lottie"
-            loop
-            autoplay
-            style={{ width: 200, height: 200 }}
-          />
-        </motion.div>
-        <div>
-          <h1 className="flex flex-wrap" style={{ letterSpacing: "-3px" }}>
-            {name.split("").map((c, i) => (
-              <motion.span key={i} initial={{ opacity: 0, y: 50, filter: "blur(8px)" }} animate={{ opacity: 1, y: 0, filter: "blur(0px)" }} transition={{ duration: 0.5, delay: 0.1 + i * 0.04, ease: "easeOut" }} className="inline-block text-[clamp(48px,10vw,72px)] font-black text-[#1C1917]">
-                {c === " " ? "\u00A0" : c}
-              </motion.span>
-            ))}
-          </h1>
-          <motion.p initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.65 }} className="mt-3 text-xl font-medium text-[#EA580C] md:text-2xl">
-            AI Developer & Automation Engineer
-          </motion.p>
-          <motion.p initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.85 }} className="mt-5 max-w-xl text-lg leading-relaxed text-[#57534E]">
-            I build AI systems that ship — from a 20,000-line platform serving 50+ teachers to published research. Currently seeking an Erasmus+ traineeship in Europe.
-          </motion.p>
-          <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 1.1 }} className="mt-8 flex flex-wrap gap-3">
-            <button onClick={() => document.getElementById("work")?.scrollIntoView({ behavior: "smooth" })} className="rounded-full bg-[#EA580C] px-6 py-2.5 text-sm font-semibold text-white transition-all hover:bg-[#C2410C]">View Work ↓</button>
-            {SOCIALS.map((s) => (
-              <a key={s.label} href={s.href} target={s.href.startsWith("http") ? "_blank" : undefined} rel="noopener noreferrer" className="rounded-full border border-[#E7E5E4] px-5 py-2.5 text-sm text-[#57534E] transition-all hover:border-[#EA580C] hover:text-[#EA580C]">{s.label}</a>
-            ))}
-          </motion.div>
-        </div>
-        {/* Lottie animation — hero character */}
-        <motion.div initial={{ opacity: 0, scale: 0.8 }} animate={{ opacity: 1, scale: 1 }} transition={{ delay: 0.5, duration: 0.8 }} className="hidden md:block">
-          <DotLottieReact
-            src="https://lottie.host/4db68bbd-31f6-4cd8-84eb-189de081159a/IGmMCqhzpt.lottie"
-            loop
-            autoplay
-            style={{ width: 320, height: 320 }}
-          />
+      <div className="mx-auto w-full max-w-5xl">
+        <h1 className="flex flex-wrap" style={{ letterSpacing: "-3px" }}>
+          {name.split("").map((c, i) => (
+            <motion.span key={i} initial={{ opacity: 0, y: 50, filter: "blur(8px)" }} animate={{ opacity: 1, y: 0, filter: "blur(0px)" }} transition={{ duration: 0.5, delay: 0.1 + i * 0.04, ease: "easeOut" }} className="inline-block text-[clamp(48px,10vw,72px)] font-black text-[#1C1917]">
+              {c === " " ? "\u00A0" : c}
+            </motion.span>
+          ))}
+        </h1>
+        <motion.p initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.65 }} className="mt-3 text-xl font-medium text-[#EA580C] md:text-2xl">
+          AI Developer & Automation Engineer
+        </motion.p>
+        <motion.p initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.85 }} className="mt-5 max-w-xl text-lg leading-relaxed text-[#57534E]">
+          I build AI systems that ship — from a 20,000-line platform serving 50+ teachers to published research. Currently seeking an Erasmus+ traineeship in Europe.
+        </motion.p>
+        <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 1.1 }} className="mt-8 flex items-center gap-5">
+          <a href="https://github.com/mrkeles61" target="_blank" rel="noopener noreferrer" className="text-[#57534E] transition-colors hover:text-[#EA580C]" aria-label="GitHub"><GithubIcon /></a>
+          <a href="https://linkedin.com/in/erenkeles615" target="_blank" rel="noopener noreferrer" className="text-[#57534E] transition-colors hover:text-[#EA580C]" aria-label="LinkedIn"><LinkedInIcon /></a>
+          <a href="mailto:eren@keles.dev" className="text-[#57534E] transition-colors hover:text-[#EA580C]" aria-label="Email"><MailIcon /></a>
+          <span className="mx-1 h-4 w-px bg-[#E7E5E4]" />
+          <button onClick={() => document.getElementById("work")?.scrollIntoView({ behavior: "smooth" })} className="text-sm font-medium text-[#57534E] transition-colors hover:text-[#EA580C]">View Work ↓</button>
         </motion.div>
       </div>
     </section>
@@ -235,7 +223,7 @@ function EmailDashboardMock() {
       </div>
       <div className="mb-4">
         <p className="mb-1.5 text-[10px] text-stone-400">Daily send volume</p>
-        <div className="flex items-end gap-[3px] h-14">
+        <div className="flex h-14 items-end gap-[3px]">
           {[65, 80, 45, 90, 72, 88, 95, 60, 85, 78, 92, 70, 88, 82].map((h, i) => (
             <div key={i} className="flex-1 rounded-t bg-orange-500/60 transition-colors hover:bg-orange-400" style={{ height: `${h}%` }} />
           ))}
@@ -271,7 +259,7 @@ function ProjectVisual({ project }: { project: (typeof PROJECTS)[0] }) {
   }, [inView, project.visual.type]);
 
   return (
-    <div ref={cRef} className="project-visual overflow-hidden rounded-2xl border border-[#E7E5E4] bg-[#FFF7ED] shadow-[0_8px_32px_rgba(234,88,12,0.06)] transition-transform duration-400 ease-out group-hover:scale-[1.02]">
+    <div ref={cRef} className="overflow-hidden rounded-2xl border border-[#E7E5E4] bg-[#FFF7ED] shadow-[0_8px_32px_rgba(234,88,12,0.06)] transition-transform duration-400 ease-out group-hover:scale-[1.02]">
       {project.visual.type === "video" ? (
         <video ref={ref} src={project.visual.src} poster={project.visual.poster} autoPlay muted loop playsInline preload="metadata" className="aspect-video w-full object-cover" />
       ) : project.visual.type === "dashboard" ? (
@@ -291,7 +279,7 @@ function Projects() {
         <h2 className="mt-2 text-4xl font-bold text-[#1C1917] md:text-5xl" data-reveal>Projects</h2>
         <div className="mt-20 space-y-28">
           {PROJECTS.map((p, i) => (
-            <div key={p.name} className={`project-card group grid items-center gap-10 rounded-2xl p-2 transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_12px_40px_rgba(234,88,12,0.08)] md:grid-cols-2 ${i % 2 === 1 ? "md:[direction:rtl]" : ""}`} data-reveal>
+            <div key={p.name} className={`group grid items-center gap-10 rounded-2xl p-2 transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_12px_40px_rgba(234,88,12,0.08)] md:grid-cols-2 ${i % 2 === 1 ? "md:[direction:rtl]" : ""}`} data-reveal>
               <div className={i % 2 === 1 ? "md:[direction:ltr]" : ""}><ProjectVisual project={p} /></div>
               <div className={i % 2 === 1 ? "md:[direction:ltr]" : ""}>
                 <p className="font-mono text-xs uppercase tracking-widest text-[#A8A29E]">{p.tagline}</p>
@@ -391,9 +379,9 @@ function Contact() {
         <p className="mt-4 text-lg text-[#A8A29E]" data-reveal>Seeking Erasmus+ traineeship in AI/automation in Europe — Summer 2026</p>
         <a href="mailto:eren@keles.dev" className="mt-8 inline-block rounded-full bg-[#EA580C] px-8 py-3 text-lg font-semibold text-white transition-all hover:bg-[#F97316] hover:scale-105" data-reveal>eren@keles.dev</a>
         <div className="mt-8 flex flex-wrap justify-center gap-4" data-reveal>
-          {SOCIALS.filter((s) => s.label !== "Email").map((s) => (
-            <a key={s.label} href={s.href} target={s.href.startsWith("http") ? "_blank" : undefined} rel="noopener noreferrer" className="rounded-full border border-[#44403C] px-5 py-2 text-sm text-[#A8A29E] transition-all hover:border-[#EA580C] hover:text-[#FAFAF9]">{s.label} →</a>
-          ))}
+          <a href="https://github.com/mrkeles61" target="_blank" rel="noopener noreferrer" className="rounded-full border border-[#44403C] px-5 py-2 text-sm text-[#A8A29E] transition-all hover:border-[#EA580C] hover:text-[#FAFAF9]">GitHub →</a>
+          <a href="https://linkedin.com/in/erenkeles615" target="_blank" rel="noopener noreferrer" className="rounded-full border border-[#44403C] px-5 py-2 text-sm text-[#A8A29E] transition-all hover:border-[#EA580C] hover:text-[#FAFAF9]">LinkedIn →</a>
+          <a href="/Eren_Keles_Resume_EN.pdf" target="_blank" className="rounded-full border border-[#44403C] px-5 py-2 text-sm text-[#A8A29E] transition-all hover:border-[#EA580C] hover:text-[#FAFAF9]">Resume →</a>
         </div>
       </div>
     </section>
