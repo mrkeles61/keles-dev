@@ -99,17 +99,15 @@ function useGsapReveal() {
 /* ═══ NAV ═══ */
 function Nav() {
   const [scrolled, setScrolled] = useState(false);
-  const [hidden, setHidden] = useState(false);
-  const lastY = useRef(0);
   useEffect(() => {
-    const h = () => { const y = window.scrollY; setScrolled(y > 50); setHidden(y > lastY.current && y > 200); lastY.current = y; };
+    const h = () => setScrolled(window.scrollY > 50);
     window.addEventListener("scroll", h, { passive: true });
     return () => window.removeEventListener("scroll", h);
   }, []);
   const to = (id: string) => document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
 
   return (
-    <motion.header className={`fixed inset-x-0 top-0 z-50 transition-all duration-300 ${scrolled ? "border-b border-[#292524] bg-[#1C1917]/90 backdrop-blur-md" : ""}`} animate={{ y: hidden ? -80 : 0 }} transition={{ duration: 0.3 }}>
+    <header className={`fixed inset-x-0 top-0 z-50 transition-all duration-300 ${scrolled ? "border-b border-[#292524] bg-[#1C1917]/90 backdrop-blur-md" : ""}`}>
       <nav className="mx-auto flex max-w-5xl items-center justify-between px-6 py-4">
         <button onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })} className="text-lg font-extrabold tracking-[-0.03em] text-[#FAFAF9]">Eren Keleş</button>
         <div className="flex items-center gap-8 text-sm text-[#A8A29E]">
@@ -117,7 +115,7 @@ function Nav() {
           <button onClick={() => to("contact")} className="transition-colors hover:text-[#EA580C]">Contact</button>
         </div>
       </nav>
-    </motion.header>
+    </header>
   );
 }
 
@@ -364,5 +362,5 @@ function Footer() {
 export default function Home() {
   useLenis();
   useGsapReveal();
-  return (<><Nav /><Hero /><Projects /><WorkExperience /><Education /><TechStack /><Contact /><Footer /></>);
+  return (<><Nav /><Hero /><Projects /><WorkExperience /><Education /><Contact /><Footer /></>);
 }
