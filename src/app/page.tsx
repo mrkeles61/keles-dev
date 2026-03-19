@@ -6,6 +6,7 @@ import { motion, useInView } from "framer-motion";
 /* ═══ DATA ═══ */
 const PROJECTS = [
   {
+    year: "2026",
     name: "BilChat",
     tagline: "AI Educational Platform",
     impact: "Full-stack AI platform used by ~50 teachers. 20,000+ lines. Sole developer.",
@@ -16,6 +17,7 @@ const PROJECTS = [
     visual: { type: "video" as const, src: "/videos/bilchat.mp4", poster: "/videos/bilchat-poster.jpg" },
   },
   {
+    year: "2025",
     name: "RAG Pipeline Evaluation",
     tagline: "IEEE Conference Paper",
     impact: "Compared 3 RAG architectures across 20+ metrics. Co-authored IEEE conference paper.",
@@ -26,6 +28,7 @@ const PROJECTS = [
     visual: { type: "image" as const, src: "/images/rag.svg" },
   },
   {
+    year: "2025",
     name: "YoloMode",
     tagline: "VS Code Extension · \"Stop clicking Accept.\"",
     impact: "Developer automation tool. 3,800+ downloads, 5-star rating.",
@@ -36,6 +39,7 @@ const PROJECTS = [
     visual: { type: "image" as const, src: "/images/yolomode.svg" },
   },
   {
+    year: "2026",
     name: "Email Outreach Automation",
     tagline: "Agentic AI System",
     impact: "Agentic email system. 1,500+ emails/week, 11% response rate.",
@@ -46,6 +50,7 @@ const PROJECTS = [
     visual: { type: "dashboard" as const },
   },
   {
+    year: "2024",
     name: "WellWorks Turkey",
     tagline: "Freelance Client Project",
     impact: "23-page React SPA. Built ~70% faster using AI-augmented development.",
@@ -57,14 +62,35 @@ const PROJECTS = [
   },
 ];
 
-const WORK_EXPERIENCE = [
-  { period: "2025 – 2026", title: "Software Developer", company: "BilFen Schools, Istanbul", desc: "Sole developer of BilChat AI platform" },
-  { period: "2024 – now", title: "Freelance Web Developer", company: "Remote", desc: "AI-augmented development with Claude Code" },
-];
-
-const EDUCATION = [
-  { period: "2025", title: "Erasmus+ Exchange", school: "HKA Karlsruhe, Germany", desc: "Computer Science — ML, Agile, AI coursework", image: "/images/hka-campus.jpg" },
-  { period: "2022 – 2026", title: "B.Sc. Computer Engineering", school: "Istanbul, Turkey", desc: "Capstone: RAG Pipeline Evaluation (IEEE paper)", image: "/images/iku-campus.jpg" },
+const TIMELINE = [
+  {
+    date: "Nov 2025 — Feb 2026",
+    title: "Software Developer",
+    subtitle: "BilFen Schools · Istanbul",
+    description: "Sole developer of BilChat AI educational platform. 20,000+ LOC.",
+    type: "work" as const,
+  },
+  {
+    date: "Mar 2025 — Aug 2025",
+    title: "Erasmus+ Exchange",
+    subtitle: "Hochschule Karlsruhe (HKA) · Germany",
+    description: "Machine Learning, Agile Management, AI in Daily Life, German.",
+    type: "education" as const,
+  },
+  {
+    date: "2024 — Present",
+    title: "Freelance Web Developer",
+    subtitle: "Remote · AI-augmented development",
+    description: "WellWorks Turkey, BridgeOn Global. ~70% faster dev with Claude Code.",
+    type: "work" as const,
+  },
+  {
+    date: "2022 — 2026",
+    title: "B.Sc. Computer Engineering",
+    subtitle: "Istanbul Kültür University",
+    description: "Capstone: RAG Pipeline Evaluation (IEEE paper). Advisor: Prof. Dr. Akhan Akbulut.",
+    type: "education" as const,
+  },
 ];
 
 const TECH = [
@@ -91,6 +117,20 @@ const MailIcon = () => (
   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="h-5 w-5">
     <rect x="2" y="4" width="20" height="16" rx="2" />
     <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7" />
+  </svg>
+);
+
+const BriefcaseIcon = () => (
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className="h-3.5 w-3.5">
+    <rect x="2" y="7" width="20" height="14" rx="2" />
+    <path d="M16 7V4a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v3" />
+  </svg>
+);
+
+const GraduationIcon = () => (
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className="h-3.5 w-3.5">
+    <path d="m2 10 10-5 10 5-10 5z" />
+    <path d="M6 12v5c3 3 9 3 12 0v-5" />
   </svg>
 );
 
@@ -129,7 +169,7 @@ function useGsapReveal() {
   }, []);
 }
 
-/* ═══ NAV — minimal: wordmark left, About + Contact right ═══ */
+/* ═══ NAV ═══ */
 function Nav() {
   const [scrolled, setScrolled] = useState(false);
   const [hidden, setHidden] = useState(false);
@@ -157,7 +197,7 @@ function Nav() {
           Eren Keleş
         </button>
         <div className="flex items-center gap-8 text-sm text-[#57534E]">
-          <button onClick={() => to("experience")} className="transition-colors hover:text-[#EA580C]">About</button>
+          <button onClick={() => to("about")} className="transition-colors hover:text-[#EA580C]">About</button>
           <button onClick={() => to("contact")} className="transition-colors hover:text-[#EA580C]">Contact</button>
         </div>
       </nav>
@@ -165,7 +205,7 @@ function Nav() {
   );
 }
 
-/* ═══ HERO — text only, no mascot, icon socials ═══ */
+/* ═══ HERO ═══ */
 function Hero() {
   const name = "Eren Keleş";
   return (
@@ -271,6 +311,7 @@ function ProjectVisual({ project }: { project: (typeof PROJECTS)[0] }) {
   );
 }
 
+/* ═══ PROJECTS — with year markers ═══ */
 function Projects() {
   return (
     <section id="work" className="py-32">
@@ -282,6 +323,10 @@ function Projects() {
             <div key={p.name} className={`group grid items-center gap-10 rounded-2xl p-2 transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_12px_40px_rgba(234,88,12,0.08)] md:grid-cols-2 ${i % 2 === 1 ? "md:[direction:rtl]" : ""}`} data-reveal>
               <div className={i % 2 === 1 ? "md:[direction:ltr]" : ""}><ProjectVisual project={p} /></div>
               <div className={i % 2 === 1 ? "md:[direction:ltr]" : ""}>
+                <div className="mb-1 flex items-center gap-2">
+                  <span className="font-mono text-xs font-semibold text-[#EA580C]">{p.year}</span>
+                  <span className="h-px flex-1 bg-[#E7E5E4]" />
+                </div>
                 <p className="font-mono text-xs uppercase tracking-widest text-[#A8A29E]">{p.tagline}</p>
                 <h3 className="mt-2 text-2xl font-bold text-[#1C1917] md:text-3xl">{p.name}</h3>
                 <p className="mt-2 font-mono text-sm text-[#EA580C]">{p.metrics}</p>
@@ -303,47 +348,36 @@ function Projects() {
   );
 }
 
-function WorkExperience() {
+/* ═══ ABOUT — unified timeline for experience + education ═══ */
+function About() {
   return (
-    <section id="experience" className="border-t border-[#E7E5E4] bg-[#FFF7ED] py-32">
+    <section id="about" className="border-t border-[#E7E5E4] bg-[#FFF7ED] py-32">
       <div className="mx-auto max-w-5xl px-6">
         <p className="font-mono text-xs uppercase tracking-[0.2em] text-[#EA580C]" data-reveal>Background</p>
-        <h2 className="mt-2 text-4xl font-bold text-[#1C1917] md:text-5xl" data-reveal>Work Experience</h2>
-        <div className="mt-16">
-          {WORK_EXPERIENCE.map((e, i) => (
-            <div key={i} className="grid gap-4 border-b border-[#E7E5E4] py-8 md:grid-cols-[180px_1fr]" data-reveal>
-              <p className="font-mono text-sm text-[#EA580C]">{e.period}</p>
-              <div>
-                <h3 className="text-lg font-semibold text-[#1C1917]">{e.title}</h3>
-                <p className="text-[#57534E]">{e.company}</p>
-                <p className="mt-1 text-sm text-[#A8A29E]">{e.desc}</p>
-              </div>
-            </div>
-          ))}
-        </div>
-      </div>
-    </section>
-  );
-}
+        <h2 className="mt-2 text-4xl font-bold text-[#1C1917] md:text-5xl" data-reveal>About</h2>
+        <div className="relative mt-16 pl-8">
+          {/* Vertical line */}
+          <div className="absolute bottom-2 left-[11px] top-2 w-px bg-[#E7E5E4]" />
 
-function EducationSection() {
-  return (
-    <section id="education" className="border-t border-[#E7E5E4] py-32">
-      <div className="mx-auto max-w-5xl px-6">
-        <p className="font-mono text-xs uppercase tracking-[0.2em] text-[#EA580C]" data-reveal>Academic</p>
-        <h2 className="mt-2 text-4xl font-bold text-[#1C1917] md:text-5xl" data-reveal>Education</h2>
-        <div className="mt-16 grid gap-8 md:grid-cols-2">
-          {EDUCATION.map((e, i) => (
-            <div key={i} className="group overflow-hidden rounded-2xl border border-[#E7E5E4] bg-[#FFF7ED]/50 transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_12px_40px_rgba(234,88,12,0.08)]" data-reveal>
-              <div className="aspect-[16/9] overflow-hidden">
-                <img src={e.image} alt={e.title} className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105" loading="lazy" />
+          {TIMELINE.map((item, i) => (
+            <div key={i} className="relative mb-10 last:mb-0" data-reveal>
+              {/* Dot */}
+              <div className="absolute -left-8 top-1.5 h-[9px] w-[9px] rounded-full bg-[#EA580C] ring-4 ring-[#FFF7ED]" />
+
+              {/* Type badge */}
+              <div className="mb-1 flex items-center gap-2">
+                <span className="font-mono text-xs text-[#EA580C]">{item.date}</span>
+                <span className="inline-flex items-center gap-1 rounded-full bg-[#FFF1E0] px-2 py-0.5 text-[10px] font-medium text-[#57534E]">
+                  {item.type === "work" ? <BriefcaseIcon /> : <GraduationIcon />}
+                  {item.type === "work" ? "Work" : "Education"}
+                </span>
               </div>
-              <div className="p-6">
-                <p className="font-mono text-xs text-[#EA580C]">{e.period}</p>
-                <h3 className="mt-2 text-lg font-semibold text-[#1C1917]">{e.title}</h3>
-                <p className="text-[#57534E]">{e.school}</p>
-                <p className="mt-1 text-sm text-[#A8A29E]">{e.desc}</p>
-              </div>
+
+              <h4 className="mt-0.5 text-lg font-bold text-[#1C1917]">{item.title}</h4>
+              <p className="text-sm text-[#57534E]">{item.subtitle}</p>
+              {item.description && (
+                <p className="mt-2 max-w-lg text-sm text-[#A8A29E]">{item.description}</p>
+              )}
             </div>
           ))}
         </div>
@@ -405,8 +439,7 @@ export default function Home() {
       <Nav />
       <Hero />
       <Projects />
-      <WorkExperience />
-      <EducationSection />
+      <About />
       <TechStack />
       <Contact />
       <Footer />
