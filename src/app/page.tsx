@@ -391,7 +391,7 @@ function Contact() {
 function Footer() {
   return (
     <footer className="border-t border-[#292524] bg-[#1C1917] py-8">
-      <div className="mx-auto max-w-5xl px-6 text-center text-sm text-[#78716C]">© 2026 Eren Keleş · Built with Next.js</div>
+      <div className="mx-auto max-w-5xl px-6 text-center text-sm text-[#78716C]">© 2026 Eren Keleş</div>
     </footer>
   );
 }
