@@ -191,7 +191,7 @@ function Nav() {
 
   return (
     <motion.header
-      className={`fixed inset-x-0 top-0 z-50 transition-all duration-300 ${scrolled ? "border-b border-[#E7E5E4] bg-[#F5F5F4]/80 backdrop-blur-md" : ""}`}
+      className={`fixed inset-x-0 top-0 z-50 transition-all duration-300 ${scrolled ? "border-b border-[#D6D3D1] bg-[#F5F5F4]/80 backdrop-blur-md" : ""}`}
       animate={{ y: hidden ? -80 : 0 }}
       transition={{ duration: 0.3 }}
     >
@@ -212,7 +212,7 @@ function Nav() {
 function Hero() {
   const name = "Eren Keleş";
   return (
-    <section className="relative px-6 pb-16 pt-28 md:pb-24 md:pt-36">
+    <section className="relative flex min-h-[90vh] flex-col justify-center px-6 pt-20">
       <div className="mx-auto w-full max-w-5xl">
         <h1 className="flex flex-wrap" style={{ letterSpacing: "-3px" }}>
           {name.split("").map((c, i) => (
@@ -231,7 +231,7 @@ function Hero() {
           <a href="https://github.com/mrkeles61" target="_blank" rel="noopener noreferrer" className="text-[#57534E] transition-colors hover:text-[#EA580C]" aria-label="GitHub"><GithubIcon /></a>
           <a href="https://linkedin.com/in/erenkeles615" target="_blank" rel="noopener noreferrer" className="text-[#57534E] transition-colors hover:text-[#EA580C]" aria-label="LinkedIn"><LinkedInIcon /></a>
           <a href="mailto:eren@keles.dev" className="text-[#57534E] transition-colors hover:text-[#EA580C]" aria-label="Email"><MailIcon /></a>
-          <span className="mx-1 h-4 w-px bg-[#E7E5E4]" />
+          <span className="mx-1 h-4 w-px bg-[#D6D3D1]" />
           <button onClick={() => document.getElementById("work")?.scrollIntoView({ behavior: "smooth" })} className="text-sm font-medium text-[#57534E] transition-colors hover:text-[#EA580C]">View Work ↓</button>
         </motion.div>
       </div>
@@ -302,7 +302,7 @@ function ProjectVisual({ project }: { project: (typeof PROJECTS)[0] }) {
   }, [inView, project.visual.type]);
 
   return (
-    <div ref={cRef} className="overflow-hidden rounded-2xl border border-[#E7E5E4] bg-[#E7E5E4] shadow-[0_8px_32px_rgba(234,88,12,0.06)] transition-transform duration-400 ease-out group-hover:scale-[1.02]">
+    <div ref={cRef} className="overflow-hidden rounded-2xl border border-[#D6D3D1] bg-[#FAFAF9] shadow-[0_8px_32px_rgba(0,0,0,0.06)] transition-transform duration-400 ease-out group-hover:scale-[1.02]">
       {project.visual.type === "video" ? (
         <video ref={ref} src={project.visual.src} poster={project.visual.poster} autoPlay muted loop playsInline preload="metadata" className="aspect-video w-full object-cover" />
       ) : project.visual.type === "dashboard" ? (
@@ -328,14 +328,14 @@ function Projects() {
               <div className={i % 2 === 1 ? "md:[direction:ltr]" : ""}>
                 <div className="mb-1 flex items-center gap-2">
                   <span className="font-mono text-xs font-semibold text-[#EA580C]">{p.year}</span>
-                  <span className="h-px flex-1 bg-[#E7E5E4]" />
+                  <span className="h-px flex-1 bg-[#D6D3D1]" />
                 </div>
                 <p className="font-mono text-xs uppercase tracking-widest text-[#A8A29E]">{p.tagline}</p>
                 <h3 className="mt-2 text-2xl font-bold text-[#1C1917] md:text-3xl">{p.name}</h3>
                 <p className="mt-2 font-mono text-sm text-[#EA580C]">{p.metrics}</p>
                 <p className="mt-4 leading-relaxed text-[#57534E]">{p.story}</p>
                 <div className="mt-4 flex flex-wrap gap-1.5">
-                  {p.tech.map((t) => <span key={t} className="rounded-md bg-[#E7E5E4] px-2 py-0.5 font-mono text-[11px] text-[#57534E]">{t}</span>)}
+                  {p.tech.map((t) => <span key={t} className="rounded-md bg-[#D6D3D1]/50 px-2 py-0.5 font-mono text-[11px] text-[#57534E]">{t}</span>)}
                 </div>
                 {p.link !== "#" && (
                   <a href={p.link} target="_blank" rel="noopener noreferrer" className="mt-6 inline-flex items-center gap-1 text-sm font-medium text-[#EA580C] transition-colors hover:text-[#C2410C]">
@@ -354,13 +354,13 @@ function Projects() {
 /* ═══ WORK EXPERIENCE — timeline with cards ═══ */
 function WorkExperience() {
   return (
-    <section id="about" className="border-t border-[#E7E5E4] bg-[#E7E5E4] py-32">
+    <section id="about" className="border-t border-[#D6D3D1] bg-[#ECECEA] py-32">
       <div className="mx-auto max-w-5xl px-6">
         <p className="font-mono text-xs uppercase tracking-[0.2em] text-[#EA580C]" data-reveal>Background</p>
         <h2 className="mt-2 text-4xl font-bold text-[#1C1917] md:text-5xl" data-reveal>Experience</h2>
         <div className="relative mt-16 pl-8 md:pl-10">
           {/* Vertical line */}
-          <div className="absolute bottom-0 left-[11px] top-0 w-px bg-gradient-to-b from-[#EA580C]/40 via-[#E7E5E4] to-transparent md:left-[13px]" />
+          <div className="absolute bottom-0 left-[11px] top-0 w-px bg-gradient-to-b from-[#EA580C]/40 via-[#D6D3D1] to-transparent md:left-[13px]" />
 
           {WORK_EXPERIENCE.map((item, i) => (
             <div key={i} className="relative mb-12 last:mb-0" data-reveal>
@@ -368,12 +368,12 @@ function WorkExperience() {
               <div className="absolute -left-8 top-6 md:-left-10">
                 <div className="relative flex h-[11px] w-[11px] items-center justify-center md:h-[13px] md:w-[13px]">
                   {i === 0 && <div className="absolute h-full w-full animate-ping rounded-full bg-[#EA580C]/30" />}
-                  <div className="h-[9px] w-[9px] rounded-full bg-[#EA580C] ring-4 ring-[#E7E5E4] md:h-[11px] md:w-[11px]" />
+                  <div className="h-[9px] w-[9px] rounded-full bg-[#EA580C] ring-4 ring-[#ECECEA] md:h-[11px] md:w-[11px]" />
                 </div>
               </div>
 
               {/* Card */}
-              <div className="rounded-xl border border-[#E7E5E4] bg-[#FAFAF9] p-5 shadow-[0_2px_12px_rgba(0,0,0,0.04)] transition-all duration-300 hover:-translate-y-0.5 hover:shadow-[0_8px_30px_rgba(234,88,12,0.08)] md:p-6">
+              <div className="rounded-xl border border-[#D6D3D1] bg-[#FAFAF9] p-5 shadow-[0_2px_12px_rgba(0,0,0,0.04)] transition-all duration-300 hover:-translate-y-0.5 hover:shadow-[0_8px_30px_rgba(234,88,12,0.08)] md:p-6">
                 <div className="flex flex-wrap items-center gap-x-3 gap-y-1">
                   <span className="inline-flex items-center gap-1.5 font-mono text-xs text-[#EA580C]">
                     <BriefcaseIcon />
@@ -385,7 +385,7 @@ function WorkExperience() {
                 <p className="mt-3 text-sm leading-relaxed text-[#78716C]">{item.description}</p>
                 <div className="mt-4 flex flex-wrap gap-2">
                   {item.highlights.map((h) => (
-                    <span key={h} className="rounded-full bg-[#E7E5E4] px-2.5 py-0.5 font-mono text-[11px] font-medium text-[#EA580C]">{h}</span>
+                    <span key={h} className="rounded-full bg-[#EA580C]/10 px-2.5 py-0.5 font-mono text-[11px] font-medium text-[#EA580C]">{h}</span>
                   ))}
                 </div>
               </div>
@@ -400,13 +400,13 @@ function WorkExperience() {
 /* ═══ EDUCATION — separate section with cards ═══ */
 function Education() {
   return (
-    <section id="education" className="border-t border-[#E7E5E4] py-32">
+    <section id="education" className="border-t border-[#D6D3D1] py-32">
       <div className="mx-auto max-w-5xl px-6">
         <p className="font-mono text-xs uppercase tracking-[0.2em] text-[#EA580C]" data-reveal>Academic</p>
         <h2 className="mt-2 text-4xl font-bold text-[#1C1917] md:text-5xl" data-reveal>Education</h2>
         <div className="relative mt-16 pl-8 md:pl-10">
           {/* Vertical line */}
-          <div className="absolute bottom-0 left-[11px] top-0 w-px bg-gradient-to-b from-[#EA580C]/40 via-[#E7E5E4] to-transparent md:left-[13px]" />
+          <div className="absolute bottom-0 left-[11px] top-0 w-px bg-gradient-to-b from-[#EA580C]/40 via-[#D6D3D1] to-transparent md:left-[13px]" />
 
           {EDUCATION_ITEMS.map((item, i) => (
             <div key={i} className="relative mb-12 last:mb-0" data-reveal>
@@ -416,7 +416,7 @@ function Education() {
               </div>
 
               {/* Card */}
-              <div className="rounded-xl border border-[#E7E5E4] bg-[#E7E5E4]/50 p-5 shadow-[0_2px_12px_rgba(0,0,0,0.04)] transition-all duration-300 hover:-translate-y-0.5 hover:shadow-[0_8px_30px_rgba(234,88,12,0.08)] md:p-6">
+              <div className="rounded-xl border border-[#D6D3D1] bg-[#FAFAF9] p-5 shadow-[0_2px_12px_rgba(0,0,0,0.04)] transition-all duration-300 hover:-translate-y-0.5 hover:shadow-[0_8px_30px_rgba(234,88,12,0.08)] md:p-6">
                 <div className="flex flex-wrap items-center gap-x-3 gap-y-1">
                   <span className="inline-flex items-center gap-1.5 font-mono text-xs text-[#EA580C]">
                     <GraduationIcon />
@@ -428,7 +428,7 @@ function Education() {
                 <p className="mt-3 text-sm leading-relaxed text-[#78716C]">{item.description}</p>
                 <div className="mt-4 flex flex-wrap gap-2">
                   {item.tags.map((t) => (
-                    <span key={t} className="rounded-full border border-[#E7E5E4] bg-[#FAFAF9] px-2.5 py-0.5 font-mono text-[11px] text-[#57534E]">{t}</span>
+                    <span key={t} className="rounded-full border border-[#D6D3D1] bg-[#FAFAF9] px-2.5 py-0.5 font-mono text-[11px] text-[#57534E]">{t}</span>
                   ))}
                 </div>
               </div>
@@ -442,13 +442,13 @@ function Education() {
 
 function TechStack() {
   return (
-    <section className="border-t border-[#E7E5E4] py-32">
+    <section className="border-t border-[#D6D3D1] bg-[#ECECEA] py-32">
       <div className="mx-auto max-w-5xl px-6">
         <p className="font-mono text-xs uppercase tracking-[0.2em] text-[#EA580C]" data-reveal>Toolkit</p>
         <h2 className="mt-2 text-4xl font-bold text-[#1C1917] md:text-5xl" data-reveal>Tech Stack</h2>
         <div className="mt-16 grid gap-6 md:grid-cols-2">
           {TECH.map((t) => (
-            <div key={t.cat} className="rounded-xl border border-[#E7E5E4] bg-[#E7E5E4]/50 p-6" data-reveal>
+            <div key={t.cat} className="rounded-xl border border-[#D6D3D1] bg-[#FAFAF9] p-6" data-reveal>
               <h3 className="font-mono text-sm font-medium uppercase tracking-widest text-[#EA580C]">{t.cat}</h3>
               <p className="mt-3 leading-relaxed text-[#57534E]">{t.skills}</p>
             </div>
