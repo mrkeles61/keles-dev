@@ -82,17 +82,24 @@ const BriefcaseIcon = () => (<svg viewBox="0 0 24 24" fill="none" stroke="curren
 const GraduationIcon = () => (<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className="h-3.5 w-3.5"><path d="m2 10 10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg>);
 
 /* ═══ HOOKS ═══ */
-function useLenis() {
-  useEffect(() => {
-    let l: { destroy: () => void; raf: (t: number) => void } | undefined;
-    (async () => { try { const Lenis = (await import("lenis")).default; l = new Lenis({ duration: 1.2 }); const raf = (t: number) => { l!.raf(t); requestAnimationFrame(raf); }; requestAnimationFrame(raf); } catch {} })();
-    return () => l?.destroy();
-  }, []);
-}
-
 function useGsapReveal() {
   useEffect(() => {
-    (async () => { try { const { gsap } = await import("gsap"); const { ScrollTrigger } = await import("gsap/ScrollTrigger"); gsap.registerPlugin(ScrollTrigger); document.querySelectorAll("[data-reveal]").forEach((el, i) => { gsap.from(el, { y: 40, opacity: 0, duration: 0.8, ease: "power3.out", delay: i * 0.02, scrollTrigger: { trigger: el, start: "top 85%", toggleActions: "play none none none" } }); }); } catch {} })();
+    let triggers: { kill: () => void }[] = [];
+    (async () => {
+      try {
+        const { gsap } = await import("gsap");
+        const { ScrollTrigger } = await import("gsap/ScrollTrigger");
+        gsap.registerPlugin(ScrollTrigger);
+        document.querySelectorAll("[data-reveal]").forEach((el, i) => {
+          const tween = gsap.from(el, {
+            y: 40, opacity: 0, duration: 0.8, ease: "power3.out", delay: i * 0.02,
+            scrollTrigger: { trigger: el, start: "top 85%", toggleActions: "play none none none" },
+          });
+          if (tween.scrollTrigger) triggers.push(tween.scrollTrigger);
+        });
+      } catch {}
+    })();
+    return () => triggers.forEach((t) => t.kill());
   }, []);
 }
 
@@ -107,7 +114,7 @@ function Nav() {
   const to = (id: string) => document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
 
   return (
-    <header className={`fixed inset-x-0 top-0 z-50 transition-all duration-300 ${scrolled ? "border-b border-[#292524] bg-[#1C1917]/90 backdrop-blur-md" : ""}`}>
+    <header className={`fixed inset-x-0 top-0 z-50 will-change-transform transition-all duration-300 ${scrolled ? "border-b border-[#292524] bg-[#1C1917]/90 backdrop-blur-md" : ""}`}>
       <nav className="mx-auto flex max-w-5xl items-center justify-between px-6 py-4">
         <button onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })} className="text-lg font-extrabold tracking-[-0.03em] text-[#FAFAF9]">Eren Keleş</button>
         <div className="flex items-center gap-8 text-sm text-[#A8A29E]">
@@ -119,15 +126,16 @@ function Nav() {
   );
 }
 
-/* ═══ CODE RAIN ═══ */
+/* ═══ CODE RAIN — CSS-animated, GPU-composited ═══ */
 const CODE_LINES = [
-  "const ai = new Agent('bilchat')", "await rag.query(curriculum, { topK: 5 })", "const embeddings = await embed(chunks)",
-  "pipeline.process({ students: 300 })", "export default async function handler(req) {", "  const { data } = await supabase.from('lessons')",
-  "docker compose up -d --build", "const score = evaluate(predicted, actual)", "// F1: 86.2 | hallucination: 0.77%",
-  "git push origin main && vercel --prod", "await chrome.devtools.accept(step)", "const response = await claude.complete(prompt)",
-  "SELECT embedding <-> $1 FROM documents", "npm run build ✓ Compiled successfully", "export const metadata: Metadata = {",
-  "  title: 'Eren Keleş — AI Developer'", "const quiz = generateQuiz(topic, level)", "await sendEmail({ to, subject, body })",
-  "scanner.process(assignments, { batch: 50 })", "✓ 20,000+ lines shipped to production",
+  { text: "const ai = new Agent('bilchat')", top: 8, left: 15, accent: true },
+  { text: "await rag.query(curriculum, { topK: 5 })", top: 22, left: 45 },
+  { text: "// F1: 86.2 | hallucination: 0.77%", top: 36, left: 25, accent: true },
+  { text: "git push origin main && vercel --prod", top: 50, left: 55 },
+  { text: "const response = await claude.complete(prompt)", top: 64, left: 10 },
+  { text: "npm run build ✓ Compiled successfully", top: 78, left: 40, accent: true },
+  { text: "SELECT embedding <-> $1 FROM documents", top: 44, left: 65 },
+  { text: "✓ 20,000+ lines shipped to production", top: 88, left: 30 },
 ];
 
 function CodeRain() {
@@ -136,13 +144,16 @@ function CodeRain() {
       <div className="absolute inset-0 bg-gradient-to-b from-[#1C1917] via-transparent to-[#1C1917] opacity-50" />
       <div className="absolute inset-0 bg-gradient-to-r from-[#1C1917] via-transparent to-[#1C1917] opacity-30" />
       {CODE_LINES.map((line, i) => (
-        <motion.div key={i} className="absolute whitespace-nowrap font-mono text-[11px] md:text-xs"
-          style={{ top: `${(i * 5.2) % 100}%`, left: `${8 + (i % 4) * 24}%`, color: i % 5 === 0 ? "#EA580C" : i % 3 === 0 ? "#57534E" : "#44403C" }}
-          initial={{ opacity: 0, x: 20 }}
-          animate={{ opacity: [0, 0.7, 0.7, 0], x: [20, 0, 0, -10] }}
-          transition={{ duration: 10, delay: 1.5 + i * 0.8, repeat: Infinity, repeatDelay: CODE_LINES.length * 0.8 - 10 + 6, ease: "easeInOut" }}>
-          {line}
-        </motion.div>
+        <div key={i}
+          className="code-line absolute whitespace-nowrap font-mono text-[11px] md:text-xs"
+          style={{
+            top: `${line.top}%`,
+            left: `${line.left}%`,
+            color: line.accent ? "#EA580C" : "#57534E",
+            animationDelay: `${i * 2.5}s`,
+          }}>
+          {line.text}
+        </div>
       ))}
     </div>
   );
@@ -360,7 +371,6 @@ function Footer() {
 
 /* ═══ PAGE ═══ */
 export default function Home() {
-  useLenis();
   useGsapReveal();
   return (<><Nav /><Hero /><Projects /><WorkExperience /><Education /><Contact /><Footer /></>);
 }
