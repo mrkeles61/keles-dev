@@ -191,15 +191,15 @@ function Nav() {
 
   return (
     <motion.header
-      className={`fixed inset-x-0 top-0 z-50 transition-all duration-300 ${scrolled ? "border-b border-[#D6D3D1] bg-[#F5F5F4]/80 backdrop-blur-md" : ""}`}
+      className={`fixed inset-x-0 top-0 z-50 transition-all duration-300 ${scrolled ? "border-b border-[#D6D3D1] bg-[#F5F5F4]/90 backdrop-blur-md" : ""}`}
       animate={{ y: hidden ? -80 : 0 }}
       transition={{ duration: 0.3 }}
     >
       <nav className="mx-auto flex max-w-5xl items-center justify-between px-6 py-4">
-        <button onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })} className="text-lg font-extrabold tracking-[-0.03em] text-[#1C1917]">
+        <button onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })} className={`text-lg font-extrabold tracking-[-0.03em] transition-colors duration-300 ${scrolled ? "text-[#1C1917]" : "text-[#FAFAF9]"}`}>
           Eren Keleş
         </button>
-        <div className="flex items-center gap-8 text-sm text-[#57534E]">
+        <div className={`flex items-center gap-8 text-sm transition-colors duration-300 ${scrolled ? "text-[#57534E]" : "text-[#A8A29E]"}`}>
           <button onClick={() => to("about")} className="transition-colors hover:text-[#EA580C]">About</button>
           <button onClick={() => to("contact")} className="transition-colors hover:text-[#EA580C]">Contact</button>
         </div>
@@ -234,26 +234,27 @@ const CODE_LINES = [
 
 function CodeRain() {
   return (
-    <div className="pointer-events-none absolute inset-0 -z-10 overflow-hidden" aria-hidden="true">
-      {/* Fade mask — stronger at center where text lives */}
-      <div className="absolute inset-0 bg-gradient-to-r from-[#F5F5F4] via-[#F5F5F4]/70 to-[#F5F5F4]" />
-      <div className="absolute inset-0 bg-gradient-to-b from-[#F5F5F4] via-transparent to-[#F5F5F4]" />
+    <div className="pointer-events-none absolute inset-0 overflow-hidden" aria-hidden="true">
+      {/* Soft fade at edges */}
+      <div className="absolute inset-0 bg-gradient-to-b from-[#1C1917] via-transparent to-[#1C1917] opacity-60" />
+      <div className="absolute inset-0 bg-gradient-to-r from-[#1C1917] via-transparent to-[#1C1917] opacity-40" />
 
       {CODE_LINES.map((line, i) => (
         <motion.div
           key={i}
-          className="absolute whitespace-nowrap font-mono text-[11px] text-[#A8A29E]/40 md:text-xs"
+          className="absolute whitespace-nowrap font-mono text-[11px] md:text-xs"
           style={{
             top: `${(i * 5.2) % 100}%`,
-            left: `${40 + (i % 3) * 22}%`,
+            left: `${10 + (i % 4) * 22}%`,
+            color: i % 5 === 0 ? "#EA580C" : i % 3 === 0 ? "#78716C" : "#57534E",
           }}
-          initial={{ opacity: 0, x: 30 }}
-          animate={{ opacity: [0, 0.6, 0.6, 0], x: [30, 0, 0, -20] }}
+          initial={{ opacity: 0, x: 20 }}
+          animate={{ opacity: [0, 0.5, 0.5, 0], x: [20, 0, 0, -10] }}
           transition={{
-            duration: 8,
-            delay: 1.5 + i * 0.7,
+            duration: 10,
+            delay: 1.5 + i * 0.8,
             repeat: Infinity,
-            repeatDelay: CODE_LINES.length * 0.7 - 8 + 4,
+            repeatDelay: CODE_LINES.length * 0.8 - 10 + 6,
             ease: "easeInOut",
           }}
         >
@@ -264,16 +265,16 @@ function CodeRain() {
   );
 }
 
-/* ═══ HERO ═══ */
+/* ═══ HERO — dark background ═══ */
 function Hero() {
   const name = "Eren Keleş";
   return (
-    <section className="relative flex min-h-[90vh] flex-col justify-center px-6 pt-20">
+    <section className="relative flex min-h-[90vh] flex-col justify-center overflow-hidden bg-[#1C1917] px-6 pt-20">
       <CodeRain />
-      <div className="relative mx-auto w-full max-w-5xl">
+      <div className="relative z-10 mx-auto w-full max-w-5xl">
         <h1 className="flex flex-wrap" style={{ letterSpacing: "-3px" }}>
           {name.split("").map((c, i) => (
-            <motion.span key={i} initial={{ opacity: 0, y: 50, filter: "blur(8px)" }} animate={{ opacity: 1, y: 0, filter: "blur(0px)" }} transition={{ duration: 0.5, delay: 0.1 + i * 0.04, ease: "easeOut" }} className="inline-block text-[clamp(48px,10vw,72px)] font-black text-[#1C1917]">
+            <motion.span key={i} initial={{ opacity: 0, y: 50, filter: "blur(8px)" }} animate={{ opacity: 1, y: 0, filter: "blur(0px)" }} transition={{ duration: 0.5, delay: 0.1 + i * 0.04, ease: "easeOut" }} className="inline-block text-[clamp(48px,10vw,72px)] font-black text-[#FAFAF9]">
               {c === " " ? "\u00A0" : c}
             </motion.span>
           ))}
@@ -281,15 +282,15 @@ function Hero() {
         <motion.p initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.65 }} className="mt-3 text-xl font-medium text-[#EA580C] md:text-2xl">
           AI Developer & Automation Engineer
         </motion.p>
-        <motion.p initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.85 }} className="mt-5 max-w-xl text-lg leading-relaxed text-[#57534E]">
+        <motion.p initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.85 }} className="mt-5 max-w-xl text-lg leading-relaxed text-[#A8A29E]">
           I build AI systems that ship — from a 20,000-line platform serving 50+ teachers to published research. Currently seeking an Erasmus+ traineeship in Europe.
         </motion.p>
         <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 1.1 }} className="mt-8 flex items-center gap-5">
-          <a href="https://github.com/mrkeles61" target="_blank" rel="noopener noreferrer" className="text-[#57534E] transition-colors hover:text-[#EA580C]" aria-label="GitHub"><GithubIcon /></a>
-          <a href="https://linkedin.com/in/erenkeles615" target="_blank" rel="noopener noreferrer" className="text-[#57534E] transition-colors hover:text-[#EA580C]" aria-label="LinkedIn"><LinkedInIcon /></a>
-          <a href="mailto:eren@keles.dev" className="text-[#57534E] transition-colors hover:text-[#EA580C]" aria-label="Email"><MailIcon /></a>
-          <span className="mx-1 h-4 w-px bg-[#D6D3D1]" />
-          <button onClick={() => document.getElementById("work")?.scrollIntoView({ behavior: "smooth" })} className="text-sm font-medium text-[#57534E] transition-colors hover:text-[#EA580C]">View Work ↓</button>
+          <a href="https://github.com/mrkeles61" target="_blank" rel="noopener noreferrer" className="text-[#A8A29E] transition-colors hover:text-[#EA580C]" aria-label="GitHub"><GithubIcon /></a>
+          <a href="https://linkedin.com/in/erenkeles615" target="_blank" rel="noopener noreferrer" className="text-[#A8A29E] transition-colors hover:text-[#EA580C]" aria-label="LinkedIn"><LinkedInIcon /></a>
+          <a href="mailto:eren@keles.dev" className="text-[#A8A29E] transition-colors hover:text-[#EA580C]" aria-label="Email"><MailIcon /></a>
+          <span className="mx-1 h-4 w-px bg-[#44403C]" />
+          <button onClick={() => document.getElementById("work")?.scrollIntoView({ behavior: "smooth" })} className="text-sm font-medium text-[#A8A29E] transition-colors hover:text-[#EA580C]">View Work ↓</button>
         </motion.div>
       </div>
     </section>
