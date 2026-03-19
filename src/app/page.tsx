@@ -62,34 +62,37 @@ const PROJECTS = [
   },
 ];
 
-const TIMELINE = [
+const WORK_EXPERIENCE = [
   {
     date: "Nov 2025 — Feb 2026",
     title: "Software Developer",
-    subtitle: "BilFen Schools · Istanbul",
-    description: "Sole developer of BilChat AI educational platform. 20,000+ LOC.",
-    type: "work" as const,
-  },
-  {
-    date: "Mar 2025 — Aug 2025",
-    title: "Erasmus+ Exchange",
-    subtitle: "Hochschule Karlsruhe (HKA) · Germany",
-    description: "Machine Learning, Agile Management, AI in Daily Life, German.",
-    type: "education" as const,
+    company: "BilFen Schools · Istanbul",
+    description: "Sole developer of BilChat AI educational platform. 20,000+ LOC, multi-agent AI system, RAG pipeline over Turkey's K-12 curriculum.",
+    highlights: ["20,000+ LOC", "~50 teachers", "~60% less prep time"],
   },
   {
     date: "2024 — Present",
     title: "Freelance Web Developer",
-    subtitle: "Remote · AI-augmented development",
-    description: "WellWorks Turkey, BridgeOn Global. ~70% faster dev with Claude Code.",
-    type: "work" as const,
+    company: "Remote · AI-augmented development",
+    description: "WellWorks Turkey, BridgeOn Global. Building production sites ~70% faster using Claude Code agentic workflows.",
+    highlights: ["~70% faster dev", "3 client projects", "AI-augmented"],
+  },
+];
+
+const EDUCATION_ITEMS = [
+  {
+    date: "Mar 2025 — Aug 2025",
+    title: "Erasmus+ Exchange",
+    school: "Hochschule Karlsruhe (HKA) · Germany",
+    description: "Machine Learning, Agile Management, AI in Daily Life, German language courses.",
+    tags: ["Machine Learning", "Agile", "AI"],
   },
   {
     date: "2022 — 2026",
     title: "B.Sc. Computer Engineering",
-    subtitle: "Istanbul Kültür University",
+    school: "Istanbul Kültür University",
     description: "Capstone: RAG Pipeline Evaluation (IEEE paper). Advisor: Prof. Dr. Akhan Akbulut.",
-    type: "education" as const,
+    tags: ["IEEE Paper", "RAG Pipelines", "Deep Learning"],
   },
 ];
 
@@ -348,36 +351,87 @@ function Projects() {
   );
 }
 
-/* ═══ ABOUT — unified timeline for experience + education ═══ */
-function About() {
+/* ═══ WORK EXPERIENCE — timeline with cards ═══ */
+function WorkExperience() {
   return (
     <section id="about" className="border-t border-[#E7E5E4] bg-[#FFF7ED] py-32">
       <div className="mx-auto max-w-5xl px-6">
         <p className="font-mono text-xs uppercase tracking-[0.2em] text-[#EA580C]" data-reveal>Background</p>
-        <h2 className="mt-2 text-4xl font-bold text-[#1C1917] md:text-5xl" data-reveal>About</h2>
-        <div className="relative mt-16 pl-8">
+        <h2 className="mt-2 text-4xl font-bold text-[#1C1917] md:text-5xl" data-reveal>Experience</h2>
+        <div className="relative mt-16 pl-8 md:pl-10">
           {/* Vertical line */}
-          <div className="absolute bottom-2 left-[11px] top-2 w-px bg-[#E7E5E4]" />
+          <div className="absolute bottom-0 left-[11px] top-0 w-px bg-gradient-to-b from-[#EA580C]/40 via-[#E7E5E4] to-transparent md:left-[13px]" />
 
-          {TIMELINE.map((item, i) => (
-            <div key={i} className="relative mb-10 last:mb-0" data-reveal>
-              {/* Dot */}
-              <div className="absolute -left-8 top-1.5 h-[9px] w-[9px] rounded-full bg-[#EA580C] ring-4 ring-[#FFF7ED]" />
-
-              {/* Type badge */}
-              <div className="mb-1 flex items-center gap-2">
-                <span className="font-mono text-xs text-[#EA580C]">{item.date}</span>
-                <span className="inline-flex items-center gap-1 rounded-full bg-[#FFF1E0] px-2 py-0.5 text-[10px] font-medium text-[#57534E]">
-                  {item.type === "work" ? <BriefcaseIcon /> : <GraduationIcon />}
-                  {item.type === "work" ? "Work" : "Education"}
-                </span>
+          {WORK_EXPERIENCE.map((item, i) => (
+            <div key={i} className="relative mb-12 last:mb-0" data-reveal>
+              {/* Dot with pulse ring */}
+              <div className="absolute -left-8 top-6 md:-left-10">
+                <div className="relative flex h-[11px] w-[11px] items-center justify-center md:h-[13px] md:w-[13px]">
+                  {i === 0 && <div className="absolute h-full w-full animate-ping rounded-full bg-[#EA580C]/30" />}
+                  <div className="h-[9px] w-[9px] rounded-full bg-[#EA580C] ring-4 ring-[#FFF7ED] md:h-[11px] md:w-[11px]" />
+                </div>
               </div>
 
-              <h4 className="mt-0.5 text-lg font-bold text-[#1C1917]">{item.title}</h4>
-              <p className="text-sm text-[#57534E]">{item.subtitle}</p>
-              {item.description && (
-                <p className="mt-2 max-w-lg text-sm text-[#A8A29E]">{item.description}</p>
-              )}
+              {/* Card */}
+              <div className="rounded-xl border border-[#E7E5E4] bg-white/70 p-5 shadow-[0_2px_12px_rgba(0,0,0,0.04)] transition-all duration-300 hover:-translate-y-0.5 hover:shadow-[0_8px_30px_rgba(234,88,12,0.08)] md:p-6">
+                <div className="flex flex-wrap items-center gap-x-3 gap-y-1">
+                  <span className="inline-flex items-center gap-1.5 font-mono text-xs text-[#EA580C]">
+                    <BriefcaseIcon />
+                    {item.date}
+                  </span>
+                </div>
+                <h4 className="mt-2 text-xl font-bold text-[#1C1917]">{item.title}</h4>
+                <p className="mt-0.5 text-sm font-medium text-[#57534E]">{item.company}</p>
+                <p className="mt-3 text-sm leading-relaxed text-[#78716C]">{item.description}</p>
+                <div className="mt-4 flex flex-wrap gap-2">
+                  {item.highlights.map((h) => (
+                    <span key={h} className="rounded-full bg-[#FFF1E0] px-2.5 py-0.5 font-mono text-[11px] font-medium text-[#EA580C]">{h}</span>
+                  ))}
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/* ═══ EDUCATION — separate section with cards ═══ */
+function Education() {
+  return (
+    <section id="education" className="border-t border-[#E7E5E4] py-32">
+      <div className="mx-auto max-w-5xl px-6">
+        <p className="font-mono text-xs uppercase tracking-[0.2em] text-[#EA580C]" data-reveal>Academic</p>
+        <h2 className="mt-2 text-4xl font-bold text-[#1C1917] md:text-5xl" data-reveal>Education</h2>
+        <div className="relative mt-16 pl-8 md:pl-10">
+          {/* Vertical line */}
+          <div className="absolute bottom-0 left-[11px] top-0 w-px bg-gradient-to-b from-[#EA580C]/40 via-[#E7E5E4] to-transparent md:left-[13px]" />
+
+          {EDUCATION_ITEMS.map((item, i) => (
+            <div key={i} className="relative mb-12 last:mb-0" data-reveal>
+              {/* Dot */}
+              <div className="absolute -left-8 top-6 md:-left-10">
+                <div className="h-[9px] w-[9px] rounded-full bg-[#EA580C] ring-4 ring-[#FFFBF5] md:h-[11px] md:w-[11px]" />
+              </div>
+
+              {/* Card */}
+              <div className="rounded-xl border border-[#E7E5E4] bg-[#FFF7ED]/50 p-5 shadow-[0_2px_12px_rgba(0,0,0,0.04)] transition-all duration-300 hover:-translate-y-0.5 hover:shadow-[0_8px_30px_rgba(234,88,12,0.08)] md:p-6">
+                <div className="flex flex-wrap items-center gap-x-3 gap-y-1">
+                  <span className="inline-flex items-center gap-1.5 font-mono text-xs text-[#EA580C]">
+                    <GraduationIcon />
+                    {item.date}
+                  </span>
+                </div>
+                <h4 className="mt-2 text-xl font-bold text-[#1C1917]">{item.title}</h4>
+                <p className="mt-0.5 text-sm font-medium text-[#57534E]">{item.school}</p>
+                <p className="mt-3 text-sm leading-relaxed text-[#78716C]">{item.description}</p>
+                <div className="mt-4 flex flex-wrap gap-2">
+                  {item.tags.map((t) => (
+                    <span key={t} className="rounded-full border border-[#E7E5E4] bg-white/60 px-2.5 py-0.5 font-mono text-[11px] text-[#57534E]">{t}</span>
+                  ))}
+                </div>
+              </div>
             </div>
           ))}
         </div>
@@ -439,7 +493,8 @@ export default function Home() {
       <Nav />
       <Hero />
       <Projects />
-      <About />
+      <WorkExperience />
+      <Education />
       <TechStack />
       <Contact />
       <Footer />
