@@ -208,12 +208,69 @@ function Nav() {
   );
 }
 
+/* ═══ CODE RAIN BACKGROUND ═══ */
+const CODE_LINES = [
+  "const ai = new Agent('bilchat')",
+  "await rag.query(curriculum, { topK: 5 })",
+  "const embeddings = await embed(chunks)",
+  "pipeline.process({ students: 300 })",
+  "export default async function handler(req) {",
+  "  const { data } = await supabase.from('lessons')",
+  "docker compose up -d --build",
+  "const score = evaluate(predicted, actual)",
+  "// F1: 86.2 | hallucination: 0.77%",
+  "git push origin main && vercel --prod",
+  "await chrome.devtools.accept(step)",
+  "const response = await claude.complete(prompt)",
+  "SELECT embedding <-> $1 FROM documents",
+  "npm run build ✓ Compiled successfully",
+  "export const metadata: Metadata = {",
+  "  title: 'Eren Keleş — AI Developer'",
+  "const quiz = generateQuiz(topic, level)",
+  "await sendEmail({ to, subject, body })",
+  "scanner.process(assignments, { batch: 50 })",
+  "✓ 20,000+ lines shipped to production",
+];
+
+function CodeRain() {
+  return (
+    <div className="pointer-events-none absolute inset-0 -z-10 overflow-hidden" aria-hidden="true">
+      {/* Fade mask — stronger at center where text lives */}
+      <div className="absolute inset-0 bg-gradient-to-r from-[#F5F5F4] via-[#F5F5F4]/70 to-[#F5F5F4]" />
+      <div className="absolute inset-0 bg-gradient-to-b from-[#F5F5F4] via-transparent to-[#F5F5F4]" />
+
+      {CODE_LINES.map((line, i) => (
+        <motion.div
+          key={i}
+          className="absolute whitespace-nowrap font-mono text-[11px] text-[#A8A29E]/40 md:text-xs"
+          style={{
+            top: `${(i * 5.2) % 100}%`,
+            left: `${40 + (i % 3) * 22}%`,
+          }}
+          initial={{ opacity: 0, x: 30 }}
+          animate={{ opacity: [0, 0.6, 0.6, 0], x: [30, 0, 0, -20] }}
+          transition={{
+            duration: 8,
+            delay: 1.5 + i * 0.7,
+            repeat: Infinity,
+            repeatDelay: CODE_LINES.length * 0.7 - 8 + 4,
+            ease: "easeInOut",
+          }}
+        >
+          {line}
+        </motion.div>
+      ))}
+    </div>
+  );
+}
+
 /* ═══ HERO ═══ */
 function Hero() {
   const name = "Eren Keleş";
   return (
     <section className="relative flex min-h-[90vh] flex-col justify-center px-6 pt-20">
-      <div className="mx-auto w-full max-w-5xl">
+      <CodeRain />
+      <div className="relative mx-auto w-full max-w-5xl">
         <h1 className="flex flex-wrap" style={{ letterSpacing: "-3px" }}>
           {name.split("").map((c, i) => (
             <motion.span key={i} initial={{ opacity: 0, y: 50, filter: "blur(8px)" }} animate={{ opacity: 1, y: 0, filter: "blur(0px)" }} transition={{ duration: 0.5, delay: 0.1 + i * 0.04, ease: "easeOut" }} className="inline-block text-[clamp(48px,10vw,72px)] font-black text-[#1C1917]">
